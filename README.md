@@ -1,7 +1,7 @@
 <div align="center">
 
 <!-- Master Terminal Banner -->
-<img src="./dark.svg?v=2" width="100%"/>
+<img src="./dark.svg?v=3" width="100%"/>
 <br>
 
 <!-- Social Badges -->
