@@ -1,4 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="800" height="480">
+import os
+
+def create_retro_monitor_svg(output_path="pcb-card.svg"):
+    svg = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="800" height="480">
 <defs>
     <!-- CRT Glow Filter -->
     <filter id="crt-glow" x="-10%" y="-10%" width="120%" height="120%">
@@ -213,4 +216,11 @@
         <rect x="530" y="9" width="16" height="10" rx="2" fill="#334155"/>
     </g>
 </g>
-</svg>
+</svg>"""
+
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(svg)
+    print(f"Created {output_path} — {round(len(svg)/1024, 1)} KB")
+
+if __name__ == "__main__":
+    create_retro_monitor_svg()

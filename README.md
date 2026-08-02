@@ -26,7 +26,7 @@
 
 <br><br>
 
-<!-- PCB Card -->
-<img src="./pcb-card.svg?v=2" width="70%" />
+<!-- Retro Arcade Monitor Game Card -->
+<img src="./pcb-card.svg?v=3" width="85%" />
 
 </div>
