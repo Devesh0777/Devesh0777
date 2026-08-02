@@ -1,6 +1,7 @@
 <div align="center">
 
-<img src="./dark.svg" width="100%"/>
+<!-- Master Terminal Banner -->
+<img src="https://raw.githubusercontent.com/Devesh0777/Devesh0777/main/dark.svg" width="100%"/>
 
 <br>
 
@@ -16,18 +17,17 @@
 
 <br><br>
 
-<!-- Streak -->
+<!-- Streak Stats -->
 <img src="https://streak-stats.demolab.com/?user=Devesh0777&hide_border=true&background=0A101F&stroke=22D3EE&ring=A78BFA&fire=10B981&currStreakLabel=22D3EE&sideLabels=94A3B8&currStreakNum=F8FAFC&sideNums=F8FAFC&dates=64748B&titleColor=22D3EE&card_width=1000" width="80%" />
 
 <br><br>
 
-<!-- Full-Width Contribution Heatmap with Snake -->
-<img src="./contrib-heatmap.svg" width="100%" />
+<!-- Contribution Heatmap with Snake -->
+<img src="https://raw.githubusercontent.com/Devesh0777/Devesh0777/main/contrib-heatmap.svg" width="100%" />
 
 <br><br>
 
-<!-- PCB Card full width-ish -->
-<img src="./pcb-card.svg" width="70%" />
+<!-- PCB Card -->
+<img src="https://raw.githubusercontent.com/Devesh0777/Devesh0777/main/pcb-card.svg" width="70%" />
 
 </div>
-
