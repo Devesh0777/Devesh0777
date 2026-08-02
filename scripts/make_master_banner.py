@@ -91,9 +91,14 @@ def build_banner():
 <g transform="translate(18,30)">
 """
 
+    phase_dots = {i: [] for i in range(NP)}
     for x, y in dots:
         p = random.randint(0, NP - 1)
-        svg += f'<rect x="{x}" y="{y}" width="2" height="2" class="dot p{p}"/>\n'
+        phase_dots[p].append((x, y))
+
+    for i in range(NP):
+        d_path = " ".join([f"M{x},{y}h2v2h-2z" for x, y in phase_dots[i]])
+        svg += f'<path d="{d_path}" class="dot p{i}"/>\n'
 
     svg += "</g>\n</svg>"
 
