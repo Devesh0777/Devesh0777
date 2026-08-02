@@ -2,7 +2,7 @@
 
 <!-- Master Terminal Banner -->
 <img src="./dark.svg" width="100%"/>
-
+ 
 <br>
 
 <!-- Social Badges -->
