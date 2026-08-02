@@ -1,0 +1,16 @@
+# 1. Create requirements.txt inside the scripts folder
+@"
+requests==2.32.3
+beautifulsoup4==4.12.3
+pillow
+numpy
+opencv-python
+rembg
+"@ | Out-File -Encoding utf8 scripts/requirements.txt
+
+# 2. Create and activate your Python virtual environment
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1
+
+# 3. Install the dependencies
+pip install -r scripts/requirements.txt
