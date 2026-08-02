@@ -1,7 +1,7 @@
 <div align="center">
 
 <!-- Master Terminal Banner -->
-<img src="https://raw.githubusercontent.com/Devesh0777/Devesh0777/main/dark.svg" width="100%"/>
+<img src="./dark.svg" width="100%"/>
 
 <br>
 
@@ -23,11 +23,11 @@
 <br><br>
 
 <!-- Contribution Heatmap with Snake -->
-<img src="https://raw.githubusercontent.com/Devesh0777/Devesh0777/main/contrib-heatmap.svg" width="100%" />
+<img src="./contrib-heatmap.svg" width="100%" />
 
 <br><br>
 
 <!-- PCB Card -->
-<img src="https://raw.githubusercontent.com/Devesh0777/Devesh0777/main/pcb-card.svg" width="70%" />
+<img src="./pcb-card.svg" width="70%" />
 
 </div>

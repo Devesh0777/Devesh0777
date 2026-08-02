@@ -97,7 +97,7 @@ def build_banner():
 
     svg += "</g>\n</svg>"
 
-    with open("dark.svg", "w") as f:
+    with open("dark.svg", "w", encoding="utf-8") as f:
         f.write(svg)
     print("Created dark.svg —", round(len(svg)/1024), "KB")
 
