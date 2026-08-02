@@ -26,7 +26,7 @@
 
 <br><br>
 
-<!-- Retro Arcade Monitor Game Card -->
-<img src="./pcb-card.svg?v=3" width="85%" />
+<!-- Retro Arcade Space Game Card -->
+<img src="./pcb-card.svg?v=4" width="100%" />
 
 </div>

@@ -1,221 +1,197 @@
 import os
 
-def create_retro_monitor_svg(output_path="pcb-card.svg"):
-    svg = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480" width="800" height="480">
+def create_retro_game_svg(output_path="pcb-card.svg"):
+    svg = """<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 400" width="860" height="400">
 <defs>
-    <!-- CRT Glow Filter -->
-    <filter id="crt-glow" x="-10%" y="-10%" width="120%" height="120%">
-        <feGaussianBlur stdDeviation="2" result="blur" />
+    <!-- Retro Neon Glow Filter -->
+    <filter id="neon-glow" x="-20%" y="-20%" width="140%" height="140%">
+        <feGaussianBlur stdDeviation="3" result="blur" />
         <feMerge>
             <feMergeNode in="blur"/>
             <feMergeNode in="SourceGraphic"/>
         </feMerge>
     </filter>
-    
-    <!-- Monitor Outer Shadow -->
-    <filter id="drop-shadow" x="-10%" y="-10%" width="120%" height="120%">
-        <feDropShadow dx="0" dy="12" stdDeviation="15" flood-color="#000000" flood-opacity="0.6"/>
-    </filter>
 
     <!-- Scanline Pattern -->
-    <pattern id="scanlines" width="100" height="4" patternUnits="userSpaceOnUse">
-        <line x1="0" y1="0" x2="100" y2="0" stroke="#000000" stroke-width="1.2" opacity="0.35"/>
+    <pattern id="scanline-pattern" width="100" height="4" patternUnits="userSpaceOnUse">
+        <line x1="0" y1="0" x2="100" y2="0" stroke="#000000" stroke-width="1.2" opacity="0.3"/>
     </pattern>
 
-    <!-- CRT Bezel Gradient -->
-    <linearGradient id="bezel-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#1E293B"/>
-        <stop offset="50%" stop-color="#0F172A"/>
-        <stop offset="100%" stop-color="#020617"/>
-    </linearGradient>
-
-    <!-- CRT Screen Reflection -->
-    <linearGradient id="screen-glare" x1="0%" y1="0%" x2="100%" y2="100%">
-        <stop offset="0%" stop-color="#22D3EE" stop-opacity="0.08"/>
-        <stop offset="30%" stop-color="#FFFFFF" stop-opacity="0.03"/>
-        <stop offset="100%" stop-color="#000000" stop-opacity="0.4"/>
-    </linearGradient>
+    <!-- Canvas Vignette Shadow -->
+    <radialGradient id="vignette" cx="50%" cy="50%" r="70%">
+        <stop offset="60%" stop-color="#000000" stop-opacity="0"/>
+        <stop offset="100%" stop-color="#000000" stop-opacity="0.6"/>
+    </radialGradient>
 </defs>
 
 <style>
-    .bg { fill: #0B0F19; }
-    .bezel { fill: url(#bezel-grad); stroke: #334155; stroke-width: 3; }
-    .screen-border { fill: #030712; stroke: #1E293B; stroke-width: 4; }
-    .crt-bg { fill: #050B14; }
+    .arcade-bg { fill: #070B12; stroke: #1E293B; stroke-width: 2; }
+    
+    /* Typography */
+    .hud-label { font-family: 'Courier New', monospace; font-size: 13px; font-weight: bold; fill: #22D3EE; letter-spacing: 2px; }
+    .hud-score { font-family: 'Courier New', monospace; font-size: 15px; font-weight: bold; fill: #10B981; }
+    .hud-hi { font-family: 'Courier New', monospace; font-size: 15px; font-weight: bold; fill: #F59E0B; }
+    .hud-user { font-family: 'Courier New', monospace; font-size: 15px; font-weight: bold; fill: #EC4899; }
+    .start-text { font-family: 'Courier New', monospace; font-size: 14px; font-weight: bold; fill: #F43F5E; letter-spacing: 3px; animation: blink 1.2s infinite; }
 
-    /* Text Fonts */
-    .hud-text { font-family: 'Courier New', monospace; font-size: 13px; font-weight: bold; fill: #22D3EE; letter-spacing: 1.5px; }
-    .hud-val { font-family: 'Courier New', monospace; font-size: 14px; font-weight: bold; fill: #10B981; }
-    .insert-coin { font-family: 'Courier New', monospace; font-size: 14px; font-weight: bold; fill: #F43F5E; animation: blink 1.2s infinite; }
+    /* Game Entities */
+    .ship-body { fill: #00F0FF; stroke: #38BDF8; stroke-width: 1.5; filter: url(#neon-glow); }
+    .laser-beam { fill: #39FF14; filter: url(#neon-glow); }
+    
+    .alien-top { fill: #FF007F; filter: url(#neon-glow); }
+    .alien-mid { fill: #00F0FF; filter: url(#neon-glow); }
+    .alien-bot { fill: #39FF14; filter: url(#neon-glow); }
 
-    /* Game Elements */
-    .player-ship { fill: #22D3EE; stroke: #38BDF8; stroke-width: 1.5; filter: url(#crt-glow); }
-    .alien-1 { fill: #A78BFA; filter: url(#crt-glow); }
-    .alien-2 { fill: #F43F5E; filter: url(#crt-glow); }
-    .alien-3 { fill: #F59E0B; filter: url(#crt-glow); }
-    .laser { fill: #34D399; filter: url(#crt-glow); }
-
-    /* Animations */
+    /* CSS Animations */
     @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
 
-    /* Player Ship Left-Right Oscillation */
-    @keyframes ship-move {
+    /* Player Ship Movement */
+    @keyframes player-traverse {
         0%, 100% { transform: translateX(0px); }
-        25% { transform: translateX(110px); }
+        25% { transform: translateX(180px); }
         50% { transform: translateX(40px); }
-        75% { transform: translateX(-90px); }
+        75% { transform: translateX(-160px); }
     }
 
-    /* Laser Shot 1 */
-    @keyframes laser1-anim {
+    /* Lasers Firing Upwards */
+    @keyframes laser-shot-1 {
         0% { transform: translateY(0); opacity: 0; }
-        10% { opacity: 1; }
-        80% { transform: translateY(-210px); opacity: 1; }
-        85%, 100% { transform: translateY(-210px); opacity: 0; }
+        5% { opacity: 1; }
+        75% { transform: translateY(-220px); opacity: 1; }
+        80%, 100% { transform: translateY(-220px); opacity: 0; }
     }
 
-    /* Laser Shot 2 */
-    @keyframes laser2-anim {
-        0%, 35% { transform: translateY(0); opacity: 0; }
-        40% { opacity: 1; }
-        90% { transform: translateY(-210px); opacity: 1; }
-        95%, 100% { transform: translateY(-210px); opacity: 0; }
+    @keyframes laser-shot-2 {
+        0%, 40% { transform: translateY(0); opacity: 0; }
+        45% { opacity: 1; }
+        90% { transform: translateY(-220px); opacity: 1; }
+        95%, 100% { transform: translateY(-220px); opacity: 0; }
     }
 
-    /* Alien Grid Sway */
-    @keyframes alien-sway {
+    /* Alien Swarm Movement */
+    @keyframes swarm-movement {
         0%, 100% { transform: translateX(0px); }
-        50% { transform: translateX(25px); }
+        50% { transform: translateX(35px); }
     }
 
-    /* Hit Explosion Flash */
-    @keyframes hit-flash {
-        0%, 75%, 85%, 100% { opacity: 0; transform: scale(0.5); }
-        78%, 82% { opacity: 1; transform: scale(1.4); }
+    /* Explosion Burst Flash */
+    @keyframes hit-explosion {
+        0%, 72%, 84%, 100% { opacity: 0; transform: scale(0.3); }
+        76%, 80% { opacity: 1; transform: scale(1.3); }
     }
 
-    /* CRT Scanline Scroll */
-    @keyframes scanline-scroll {
-        0% { transform: translateY(0); }
-        100% { transform: translateY(4px); }
-    }
-
-    .ship-group { animation: ship-move 6s ease-in-out infinite; }
-    .laser-1 { animation: laser1-anim 2.4s linear infinite; }
-    .laser-2 { animation: laser2-anim 2.4s linear infinite; }
-    .alien-grid { animation: alien-sway 4s ease-in-out infinite; }
-    .explosion-1 { animation: hit-flash 2.4s ease-out infinite; }
-    .scanline-overlay { animation: scanline-scroll 0.2s linear infinite; }
+    .player-group { animation: player-traverse 7s ease-in-out infinite; }
+    .laser-1 { animation: laser-shot-1 2.2s linear infinite; }
+    .laser-2 { animation: laser-shot-2 2.2s linear infinite; }
+    .swarm-group { animation: swarm-movement 4.5s ease-in-out infinite; }
+    .hit-burst-1 { animation: hit-explosion 2.2s ease-out infinite; }
+    .hit-burst-2 { animation: hit-explosion 2.2s ease-out infinite 1.1s; }
 </style>
 
-<!-- Main Canvas Background -->
-<rect width="800" height="480" class="bg" rx="16"/>
+<!-- Game Canvas Base -->
+<rect width="860" height="400" rx="12" class="arcade-bg"/>
 
-<!-- CRT Monitor Body / Stand -->
-<g filter="url(#drop-shadow)">
-    <!-- Monitor Stand Base -->
-    <path d="M280 430 L520 430 L500 455 L300 455 Z" fill="#0F172A" stroke="#334155" stroke-width="2"/>
-    <rect x="360" y="405" width="80" height="30" fill="#1E293B" rx="4"/>
-    
-    <!-- Monitor Outer Cabinet Bezel -->
-    <rect x="70" y="25" width="660" height="385" rx="28" class="bezel"/>
-    
-    <!-- Inner Screen Border -->
-    <rect x="95" y="45" width="610" height="340" rx="18" class="screen-border"/>
+<!-- Grid Line Accents -->
+<g stroke="#1E293B" stroke-width="0.8" opacity="0.4">
+    <line x1="40" y1="60" x2="820" y2="60"/>
+    <line x1="40" y1="330" x2="820" y2="330"/>
+</g>
 
-    <!-- CRT Display Screen -->
-    <rect x="105" y="55" width="590" height="320" rx="12" class="crt-bg"/>
+<!-- Top Retro Arcade HUD Header -->
+<g transform="translate(50, 40)">
+    <!-- 1UP Score -->
+    <text x="0" y="0" class="hud-label">1UP <tspan class="hud-user">DEVESH</tspan></text>
+    <text x="0" y="16" class="hud-score">SCORE: 12850</text>
 
-    <!-- Game HUD Header -->
-    <g transform="translate(125, 80)">
-        <text x="0" y="0" class="hud-text">SCORE: <tspan class="hud-val">08420</tspan></text>
-        <text x="210" y="0" class="hud-text">HI-SCORE: <tspan class="hud-val">99990</tspan></text>
-        <text x="440" y="0" class="hud-text">PLAYER: <tspan class="hud-val">DEVESH</tspan></text>
-        <line x1="0" y1="12" x2="550" y2="12" stroke="#1E293B" stroke-width="1.5"/>
-    </g>
+    <!-- High Score -->
+    <text x="350" y="0" class="hud-label" text-anchor="middle">HIGH SCORE</text>
+    <text x="350" y="16" class="hud-hi" text-anchor="middle">99990</text>
 
-    <!-- Alien Invaders Grid -->
-    <g class="alien-grid" transform="translate(160, 125)">
-        <!-- Row 1 (Top Aliens - Gold) -->
-        <g class="alien-3">
-            <rect x="20" y="0" width="22" height="14" rx="3"/>
-            <rect x="80" y="0" width="22" height="14" rx="3"/>
-            <rect x="140" y="0" width="22" height="14" rx="3"/>
-            <rect x="200" y="0" width="22" height="14" rx="3"/>
-            <rect x="260" y="0" width="22" height="14" rx="3"/>
-            <rect x="320" y="0" width="22" height="14" rx="3"/>
-            <rect x="380" y="0" width="22" height="14" rx="3"/>
-            <rect x="440" y="0" width="22" height="14" rx="3"/>
-        </g>
-
-        <!-- Row 2 (Middle Aliens - Purple) -->
-        <g class="alien-1" transform="translate(0, 32)">
-            <rect x="20" y="0" width="24" height="15" rx="3"/>
-            <rect x="80" y="0" width="24" height="15" rx="3"/>
-            <rect x="140" y="0" width="24" height="15" rx="3"/>
-            <rect x="200" y="0" width="24" height="15" rx="3"/>
-            <rect x="260" y="0" width="24" height="15" rx="3"/>
-            <rect x="320" y="0" width="24" height="15" rx="3"/>
-            <rect x="380" y="0" width="24" height="15" rx="3"/>
-            <rect x="440" y="0" width="24" height="15" rx="3"/>
-        </g>
-
-        <!-- Row 3 (Lower Aliens - Red) -->
-        <g class="alien-2" transform="translate(0, 64)">
-            <rect x="20" y="0" width="24" height="15" rx="3"/>
-            <rect x="80" y="0" width="24" height="15" rx="3"/>
-            <rect x="140" y="0" width="24" height="15" rx="3"/>
-            <rect x="200" y="0" width="24" height="15" rx="3"/>
-            <rect x="260" y="0" width="24" height="15" rx="3"/>
-            <rect x="320" y="0" width="24" height="15" rx="3"/>
-            <rect x="380" y="0" width="24" height="15" rx="3"/>
-            <rect x="440" y="0" width="24" height="15" rx="3"/>
-        </g>
-
-        <!-- Explosion Hit Effect on Alien -->
-        <g class="explosion-1" transform="translate(200, 32)">
-            <circle cx="12" cy="7" r="16" fill="#F59E0B" opacity="0.8"/>
-            <circle cx="12" cy="7" r="10" fill="#EF4444"/>
-            <circle cx="12" cy="7" r="5" fill="#FFFFFF"/>
-        </g>
-    </g>
-
-    <!-- Animated Player Spaceship + Fired Lasers -->
-    <g transform="translate(400, 325)">
-        <g class="ship-group">
-            <!-- Laser Shots -->
-            <rect x="-2" y="-15" width="4" height="14" class="laser laser-1"/>
-            <rect x="-2" y="-15" width="4" height="14" class="laser laser-2"/>
-
-            <!-- Player Cannon / Ship -->
-            <path d="M0 -14 L8 0 L16 8 L-16 8 L-8 0 Z" class="player-ship"/>
-            <rect x="-3" y="-18" width="6" height="6" fill="#67E8F9"/>
-        </g>
-    </g>
-
-    <!-- Footer HUD: Press Start -->
-    <g transform="translate(400, 355)">
-        <text x="0" y="0" text-anchor="middle" class="insert-coin">★ 1P READY - PRESS START ★</text>
-    </g>
-
-    <!-- CRT Scanline Grid Overlay -->
-    <rect x="105" y="55" width="590" height="320" fill="url(#scanlines)" pointer-events="none" class="scanline-overlay"/>
-
-    <!-- Screen Glass Curved Glare Overlay -->
-    <rect x="105" y="55" width="590" height="320" rx="12" fill="url(#screen-glare)" pointer-events="none"/>
-
-    <!-- Monitor Control Panel & Badges -->
-    <g transform="translate(105, 372)">
-        <!-- Brand Badge -->
-        <rect x="250" y="6" width="90" height="16" fill="#0F172A" rx="3" stroke="#334155"/>
-        <text x="295" y="18" text-anchor="middle" font-family="monospace" font-size="10" font-weight="bold" fill="#94A3B8">CRT-80s OS</text>
-
-        <!-- Power Button & Status LED -->
-        <circle cx="560" cy="14" r="5" fill="#10B981" filter="url(#crt-glow)"/>
-        <circle cx="560" cy="14" r="2" fill="#A7F3D0"/>
-        <rect x="530" y="9" width="16" height="10" rx="2" fill="#334155"/>
+    <!-- Lives Count -->
+    <text x="760" y="0" class="hud-label" text-anchor="end">LIVES</text>
+    <g transform="translate(710, 8)">
+        <!-- Pixel Hearts / Ships for lives -->
+        <path d="M0 0 L4 -6 L8 0 L12 -6 L16 0 L8 8 Z" fill="#F43F5E"/>
+        <path d="M22 0 L26 -6 L30 0 L34 -6 L38 0 L30 8 Z" fill="#F43F5E"/>
+        <path d="M44 0 L48 -6 L52 0 L56 -6 L60 0 L52 8 Z" fill="#F43F5E"/>
     </g>
 </g>
+
+<!-- Alien Swarm Grid (Centered & Perfectly Aligned) -->
+<g class="swarm-group" transform="translate(100, 95)">
+    <!-- Row 1: UFO Magenta Aliens -->
+    <g class="alien-top" transform="translate(0, 0)">
+        <g transform="translate(20,0)"><rect width="26" height="16" rx="4"/><rect x="7" y="16" width="12" height="4"/></g>
+        <g transform="translate(100,0)"><rect width="26" height="16" rx="4"/><rect x="7" y="16" width="12" height="4"/></g>
+        <g transform="translate(180,0)"><rect width="26" height="16" rx="4"/><rect x="7" y="16" width="12" height="4"/></g>
+        <g transform="translate(260,0)"><rect width="26" height="16" rx="4"/><rect x="7" y="16" width="12" height="4"/></g>
+        <g transform="translate(340,0)"><rect width="26" height="16" rx="4"/><rect x="7" y="16" width="12" height="4"/></g>
+        <g transform="translate(420,0)"><rect width="26" height="16" rx="4"/><rect x="7" y="16" width="12" height="4"/></g>
+        <g transform="translate(500,0)"><rect width="26" height="16" rx="4"/><rect x="7" y="16" width="12" height="4"/></g>
+        <g transform="translate(580,0)"><rect width="26" height="16" rx="4"/><rect x="7" y="16" width="12" height="4"/></g>
+    </g>
+
+    <!-- Row 2: Cyan Galaga Invaders -->
+    <g class="alien-mid" transform="translate(0, 42)">
+        <g transform="translate(20,0)"><rect width="26" height="16" rx="3"/><rect x="4" y="-4" width="4" height="4"/><rect x="18" y="-4" width="4" height="4"/></g>
+        <g transform="translate(100,0)"><rect width="26" height="16" rx="3"/><rect x="4" y="-4" width="4" height="4"/><rect x="18" y="-4" width="4" height="4"/></g>
+        <g transform="translate(180,0)"><rect width="26" height="16" rx="3"/><rect x="4" y="-4" width="4" height="4"/><rect x="18" y="-4" width="4" height="4"/></g>
+        <g transform="translate(260,0)"><rect width="26" height="16" rx="3"/><rect x="4" y="-4" width="4" height="4"/><rect x="18" y="-4" width="4" height="4"/></g>
+        <g transform="translate(340,0)"><rect width="26" height="16" rx="3"/><rect x="4" y="-4" width="4" height="4"/><rect x="18" y="-4" width="4" height="4"/></g>
+        <g transform="translate(420,0)"><rect width="26" height="16" rx="3"/><rect x="4" y="-4" width="4" height="4"/><rect x="18" y="-4" width="4" height="4"/></g>
+        <g transform="translate(500,0)"><rect width="26" height="16" rx="3"/><rect x="4" y="-4" width="4" height="4"/><rect x="18" y="-4" width="4" height="4"/></g>
+        <g transform="translate(580,0)"><rect width="26" height="16" rx="3"/><rect x="4" y="-4" width="4" height="4"/><rect x="18" y="-4" width="4" height="4"/></g>
+    </g>
+
+    <!-- Row 3: Neon Green Classic Invaders -->
+    <g class="alien-bot" transform="translate(0, 84)">
+        <g transform="translate(20,0)"><rect width="28" height="16" rx="2"/><rect x="-3" y="4" width="4" height="8"/><rect x="27" y="4" width="4" height="8"/></g>
+        <g transform="translate(100,0)"><rect width="28" height="16" rx="2"/><rect x="-3" y="4" width="4" height="8"/><rect x="27" y="4" width="4" height="8"/></g>
+        <g transform="translate(180,0)"><rect width="28" height="16" rx="2"/><rect x="-3" y="4" width="4" height="8"/><rect x="27" y="4" width="4" height="8"/></g>
+        <g transform="translate(260,0)"><rect width="28" height="16" rx="2"/><rect x="-3" y="4" width="4" height="8"/><rect x="27" y="4" width="4" height="8"/></g>
+        <g transform="translate(340,0)"><rect width="28" height="16" rx="2"/><rect x="-3" y="4" width="4" height="8"/><rect x="27" y="4" width="4" height="8"/></g>
+        <g transform="translate(420,0)"><rect width="28" height="16" rx="2"/><rect x="-3" y="4" width="4" height="8"/><rect x="27" y="4" width="4" height="8"/></g>
+        <g transform="translate(500,0)"><rect width="28" height="16" rx="2"/><rect x="-3" y="4" width="4" height="8"/><rect x="27" y="4" width="4" height="8"/></g>
+        <g transform="translate(580,0)"><rect width="28" height="16" rx="2"/><rect x="-3" y="4" width="4" height="8"/><rect x="27" y="4" width="4" height="8"/></g>
+    </g>
+
+    <!-- Explosion Burst Effects -->
+    <g class="hit-burst-1" transform="translate(273, 42)">
+        <polygon points="0,-12 4,-4 12,-4 6,2 8,10 0,5 -8,10 -6,2 -12,-4 -4,-4" fill="#FFE600"/>
+        <circle cx="0" cy="0" r="14" fill="#FF007F" opacity="0.6"/>
+    </g>
+    <g class="hit-burst-2" transform="translate(433, 84)">
+        <polygon points="0,-12 4,-4 12,-4 6,2 8,10 0,5 -8,10 -6,2 -12,-4 -4,-4" fill="#00F0FF"/>
+        <circle cx="0" cy="0" r="14" fill="#39FF14" opacity="0.6"/>
+    </g>
+</g>
+
+<!-- Animated Player Starship Base -->
+<g transform="translate(430, 310)">
+    <g class="player-group">
+        <!-- Upward Firing Dual Lasers -->
+        <rect x="-6" y="-18" width="3" height="16" class="laser-beam laser-1"/>
+        <rect x="3" y="-18" width="3" height="16" class="laser-beam laser-2"/>
+
+        <!-- Player Fighter Craft -->
+        <path d="M0 -22 L8 -6 L20 4 L24 12 L-24 12 L-20 4 L-8 -6 Z" class="ship-body"/>
+        <rect x="-3" y="-26" width="6" height="8" fill="#FFFFFF" filter="url(#neon-glow)"/>
+        <!-- Thruster Flame -->
+        <polygon points="-6,12 0,22 6,12" fill="#FF007F" filter="url(#neon-glow)"/>
+    </g>
+</g>
+
+<!-- Bottom Arcade Footer Banner -->
+<g transform="translate(430, 362)">
+    <text x="0" y="0" text-anchor="middle" class="start-text">★ INSERT COIN · 1P PRESS START ★</text>
+</g>
+
+<!-- CRT Scanlines Overlay -->
+<rect width="860" height="400" rx="12" fill="url(#scanline-pattern)" pointer-events="none"/>
+
+<!-- Vignette Shadow Frame -->
+<rect width="860" height="400" rx="12" fill="url(#vignette)" pointer-events="none"/>
+
 </svg>"""
 
     with open(output_path, "w", encoding="utf-8") as f:
@@ -223,4 +199,4 @@ def create_retro_monitor_svg(output_path="pcb-card.svg"):
     print(f"Created {output_path} — {round(len(svg)/1024, 1)} KB")
 
 if __name__ == "__main__":
-    create_retro_monitor_svg()
+    create_retro_game_svg()
