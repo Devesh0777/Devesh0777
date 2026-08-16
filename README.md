@@ -1,3 +1,7 @@
+<table width="100%" bgcolor="#060911">
+<tr>
+<td align="center" style="background-color: #060911; padding: 20px;">
+
 <div align="center">
 
 <!-- Master Terminal Banner -->
@@ -30,3 +34,7 @@
 <img src="./pcb-card.svg?v=5" width="100%" />
 
 </div>
+
+</td>
+</tr>
+</table>
