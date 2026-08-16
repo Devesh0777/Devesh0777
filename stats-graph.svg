@@ -14,19 +14,19 @@
     </defs>
 
     <style>
-        .bg { fill: #050C07; stroke: #00FF66; stroke-width: 2; }
-        .header-title { font-family: 'Courier New', monospace; font-size: 14px; font-weight: bold; fill: #00FF66; letter-spacing: 2px; filter: url(#hacker-glow); }
-        .axis-text { font-family: 'Courier New', monospace; font-size: 11px; font-weight: bold; fill: #86EFAC; }
-        .graph-line { fill: none; stroke: #00FF66; stroke-width: 2.5; filter: url(#hacker-glow); }
-        .graph-point { fill: #050C07; stroke: #00FF66; stroke-width: 2; filter: url(#hacker-glow); transition: transform 0.2s; }
-        .grid-line { stroke: #0F2E17; stroke-width: 1; stroke-dasharray: 4 4; }
+        .bg { fill: #0B0813; stroke: #A77BFF; stroke-width: 2; }
+        .header-title { font-family: 'Courier New', monospace; font-size: 14px; font-weight: bold; fill: #D4BEFF; letter-spacing: 2px; filter: url(#hacker-glow); }
+        .axis-text { font-family: 'Courier New', monospace; font-size: 11px; font-weight: bold; fill: #A77BFF; }
+        .graph-line { fill: none; stroke: #D4BEFF; stroke-width: 2.5; filter: url(#hacker-glow); }
+        .graph-point { fill: #0B0813; stroke: #D4BEFF; stroke-width: 2; filter: url(#hacker-glow); transition: transform 0.2s; }
+        .grid-line { stroke: #22133E; stroke-width: 1; stroke-dasharray: 4 4; }
     </style>
 
     <!-- Outer Frame -->
     <rect width="860" height="240" class="bg" rx="10" />
 
     <!-- Corner Accents -->
-    <g stroke="#00FF66" stroke-width="1.5" opacity="0.8">
+    <g stroke="#A77BFF" stroke-width="1.5" opacity="0.8">
         <line x1="12" y1="12" x2="24" y2="12" /><line x1="12" y1="12" x2="12" y2="24" />
         <line x1="848" y1="12" x2="836" y2="12" /><line x1="848" y1="12" x2="848" y2="24" />
         <line x1="12" y1="228" x2="24" y2="228" /><line x1="12" y1="228" x2="12" y2="216" />
@@ -35,12 +35,12 @@
 
     <!-- Header Bar -->
     <text x="25" y="32" class="header-title">[SYSTEM.ANALYTICS // ANNUAL COMMIT &amp; CODE ACTIVITY GRAPH]</text>
-    <line x1="25" y1="42" x2="835" y2="42" stroke="#00FF66" stroke-width="1" opacity="0.4" />
+    <line x1="25" y1="42" x2="835" y2="42" stroke="#A77BFF" stroke-width="1" opacity="0.4" />
 
     <!-- Grid Horizontal Lines -->
     <line x1="70" y1="60" x2="810" y2="60" class="grid-line" />
     <line x1="70" y1="125.0" x2="810" y2="125.0" class="grid-line" />
-    <line x1="70" y1="190" x2="810" y2="190" stroke="#00FF66" stroke-width="1.5" opacity="0.6" />
+    <line x1="70" y1="190" x2="810" y2="190" stroke="#A77BFF" stroke-width="1.5" opacity="0.6" />
 
     <!-- Y Axis Labels -->
     <text x="55" y="64" class="axis-text" text-anchor="end">250</text>

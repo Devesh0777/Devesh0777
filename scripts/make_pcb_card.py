@@ -2,13 +2,13 @@ import os
 
 OUTPUT_SVG = "pcb-card.svg"
 
-# Hacker Green PCB Theme
-BOARD_COLOR = "#050C07"       # Very dark hacker green background
-SILKSCREEN_COLOR = "#00FF66"  # Matrix neon green text/lines
-TRACE_COLOR = "#0F2E17"       # Dark green trace paths
-GLOW_COLOR = "#39FF14"        # Pulsing bright neon flow
-CHIP_BG = "#0A1C0F"           # Dark chip core
-PIN_COLOR = "#22C55E"         # Green chip pins
+# Purple PCB Cyber Theme
+BOARD_COLOR = "#0B0813"       # Dark purple background
+SILKSCREEN_COLOR = "#A77BFF"  # Purple text/lines
+TRACE_COLOR = "#1B0E33"       # Dark purple trace paths
+GLOW_COLOR = "#D4BEFF"        # Bright glowing flow
+CHIP_BG = "#130A24"           # Dark chip core
+PIN_COLOR = "#8A52FF"         # Purple chip pins
 
 svg_width = 860
 svg_height = 240

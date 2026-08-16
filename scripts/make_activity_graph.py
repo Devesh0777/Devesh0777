@@ -4,13 +4,13 @@ import math
 
 OUTPUT_SVG = "stats-graph.svg"
 
-# Neon Green Hacker Colors:
-BG_COLOR = "#050C07"
-BORDER_COLOR = "#00FF66"
-TEXT_GREEN = "#00FF66"
-TEXT_DIM = "#86EFAC"
-GLOW_COLOR = "#39FF14"
-GRID_COLOR = "#0F2E17"
+# Purple Cyber Sci-Fi Theme:
+BG_COLOR = "#0B0813"
+BORDER_COLOR = "#A77BFF"
+TEXT_GREEN = "#D4BEFF"
+TEXT_DIM = "#A77BFF"
+GLOW_COLOR = "#B18CFF"
+GRID_COLOR = "#22133E"
 
 def generate_graph_svg():
     width = 860
