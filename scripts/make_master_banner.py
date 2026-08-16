@@ -90,15 +90,21 @@ def build_hacker_profile_svg():
         
         text_pixel_width = int(len(full_text) * 8.5) + 20
         
+        # CSS keyframe animation for clipPath rect width (100% GitHub Markdown Compatible)
         clip_defs += f"""
         <clipPath id="{clip_id}">
-            <rect x="0" y="-12" width="0" height="24">
-                <animate attributeName="width" from="0" to="{text_pixel_width}" dur="{line_dur:.2f}s" begin="{cumulative_delay:.2f}s" fill="freeze" />
-            </rect>
+            <rect class="clip-rect-{idx}" x="0" y="-12" width="0" height="24" />
         </clipPath>
         """
 
         css_typewriter += f"""
+        .clip-rect-{idx} {{
+            animation: type-clip-{idx} {line_dur:.2f}s steps({len(full_text)}) {cumulative_delay:.2f}s forwards;
+        }}
+        @keyframes type-clip-{idx} {{
+            0% {{ width: 0px; }}
+            100% {{ width: {text_pixel_width}px; }}
+        }}
         .{cur_class} {{
             opacity: 0;
             animation: cur-anim-{idx} {line_dur:.2f}s steps({len(full_text)}) {cumulative_delay:.2f}s forwards, blink 0.8s infinite;
@@ -114,7 +120,7 @@ def build_hacker_profile_svg():
         <g transform="translate(0, {y_pos})">
             <!-- Label -->
             <text x="0" y="14" class="lbl-purple">{lbl}</text>
-            <!-- Animated Value inside local clipPath -->
+            <!-- Value text clipped with CSS-animated clipPath -->
             <g transform="translate(150, 14)">
                 <text x="0" y="0" class="val-purple" clip-path="url(#{clip_id})">{val}</text>
             </g>
