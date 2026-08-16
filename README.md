@@ -30,7 +30,7 @@
 <br><br>
 
 <!-- Hacker PCB Card -->
-<img src="./pcb-card.svg?v=6" width="100%" />
+<img src="./pcb-card.svg?v=7" width="100%" />
 
 </div>
 
