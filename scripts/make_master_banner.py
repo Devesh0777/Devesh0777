@@ -119,10 +119,17 @@ def build_hacker_profile_svg():
         <line x1="0" y1="0" x2="100" y2="0" stroke="#B18CFF" stroke-width="1.2" opacity="0.15"/>
     </pattern>
 
-    <!-- Retro Grid Texture -->
-    <pattern id="graph-grid" width="16" height="16" patternUnits="userSpaceOnUse">
-        <path d="M 16 0 L 0 0 0 16" fill="none" stroke="#6C4AB6" stroke-width="0.8" opacity="0.35"/>
-    </pattern>
+    <!-- 3D Solid Earth Shading Gradients -->
+    <radialGradient id="earth-sphere-grad" cx="35%" cy="30%" r="65%">
+        <stop offset="0%" stop-color="#3D1D75"/>
+        <stop offset="60%" stop-color="#1A0B36"/>
+        <stop offset="100%" stop-color="#070312"/>
+    </radialGradient>
+    <radialGradient id="earth-atmosphere-grad" cx="40%" cy="35%" r="60%">
+        <stop offset="70%" stop-color="#A77BFF" stop-opacity="0"/>
+        <stop offset="95%" stop-color="#D4BEFF" stop-opacity="0.5"/>
+        <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.8"/>
+    </radialGradient>
 </defs>
 
 <style>
@@ -137,6 +144,14 @@ def build_hacker_profile_svg():
 
     .dither-dot {{ fill: #D4BEFF; shape-rendering: crispEdges; filter: url(#purple-glow); }}
     
+    @keyframes rotate-globe {{
+        0% {{ transform: translateX(0px); }}
+        100% {{ transform: translateX(-180px); }}
+    }}
+    .rotating-earth {{
+        animation: rotate-globe 10s linear infinite;
+    }}
+
     .term-cursor {{
         fill: #A77BFF;
         filter: url(#purple-glow);
@@ -279,47 +294,92 @@ def build_hacker_profile_svg():
     </g>
 </g>
 
-<!-- Bottom Left Sci-Fi Box: Animated Gravitational Black Hole with Accretion Disk Rings -->
+<!-- Bottom Left Sci-Fi Box: Pixel Art 8-Bit Rotating Earth Globe -->
 <g transform="translate(35, 595)">
     <rect width="170" height="130" fill="#07040E" stroke="#A77BFF" stroke-width="1.5" rx="4" />
     <path d="M 8,16 V 8 H 16 M 154,8 H 162 V 16 M 8,114 V 122 H 16 M 154,122 H 162 V 114" stroke="#A77BFF" stroke-width="1.2" fill="none" opacity="0.7"/>
 
-    <!-- Black Hole Center & Accretion Halo -->
+    <!-- Retro Pixel Art Earth Globe -->
     <g transform="translate(85, 65)">
-        <!-- Outer Accretion Glow Halo -->
-        <ellipse rx="58" ry="24" fill="#A77BFF" opacity="0.15" filter="url(#purple-glow)"/>
-        
-        <!-- Rotating Gravitational Accretion Disk Rings -->
-        <g stroke="#D4BEFF" stroke-width="1.5" fill="none" filter="url(#purple-glow)">
-            <!-- Outer Accretion Warp Ring 1 -->
-            <ellipse rx="62" ry="16" transform="rotate(-25)" stroke-dasharray="160 30 50 20" opacity="0.85">
-                <animateTransform attributeName="transform" type="rotate" from="-25" to="335" dur="7s" repeatCount="indefinite"/>
-            </ellipse>
-            
-            <!-- Mid Accretion Warp Ring 2 -->
-            <ellipse rx="52" ry="22" transform="rotate(35)" stroke-dasharray="120 20 60 15" opacity="0.9">
-                <animateTransform attributeName="transform" type="rotate" from="35" to="-325" dur="5s" repeatCount="indefinite"/>
-            </ellipse>
+        <defs>
+            <clipPath id="pixel-earth-clip">
+                <circle cx="0" cy="0" r="44" />
+            </clipPath>
+        </defs>
 
-            <!-- Inner High-Velocity Ring 3 -->
-            <ellipse rx="42" ry="12" transform="rotate(-10)" stroke="#FFFFFF" stroke-width="2" stroke-dasharray="80 15 40 10">
-                <animateTransform attributeName="transform" type="rotate" from="-10" to="350" dur="3s" repeatCount="indefinite"/>
-            </ellipse>
+        <!-- Base Ocean Sphere Background -->
+        <circle cx="0" cy="0" r="44" fill="#150B2D" stroke="#A77BFF" stroke-width="1.8" filter="url(#purple-glow)"/>
+
+        <!-- Rotating Pixel Art Landmasses & Swirl Clouds -->
+        <g clip-path="url(#pixel-earth-clip)">
+            <!-- Ocean Depth Shading Pixels -->
+            <rect x="-44" y="15" width="88" height="30" fill="#0A041A" opacity="0.6"/>
+            
+            <g class="rotating-earth" shape-rendering="crispEdges">
+                <!-- Pixel Landmasses Pass 1 -->
+                <g fill="#A77BFF" opacity="0.9">
+                    <!-- Eurasia / Asia Block -->
+                    <rect x="-40" y="-32" width="28" height="12" />
+                    <rect x="-24" y="-20" width="36" height="16" />
+                    <rect x="0" y="-36" width="32" height="16" />
+                    <rect x="20" y="-24" width="24" height="12" />
+                    
+                    <!-- Africa Block -->
+                    <rect x="-32" y="-4" width="20" height="24" />
+                    <rect x="-24" y="20" width="12" height="12" />
+
+                    <!-- North America Block -->
+                    <rect x="-135" y="-32" width="28" height="16" />
+                    <rect x="-120" y="-16" width="20" height="12" />
+                    
+                    <!-- South America Block -->
+                    <rect x="-112" y="0" width="16" height="24" />
+                    <rect x="-108" y="24" width="8" height="12" />
+
+                    <!-- Australia Block -->
+                    <rect x="32" y="8" width="16" height="12" />
+
+                    <!-- Continents Loop Copy (Offset by 180px) -->
+                    <rect x="140" y="-32" width="28" height="12" />
+                    <rect x="156" y="-20" width="36" height="16" />
+                    <rect x="180" y="-36" width="32" height="16" />
+                    <rect x="45" y="-32" width="28" height="16" />
+                    <rect x="60" y="-16" width="20" height="12" />
+                    <rect x="68" y="0" width="16" height="24" />
+                </g>
+
+                <!-- Pixel Shading Highlights (Greenish/Lighter Purple accents) -->
+                <g fill="#E5D9FF" opacity="0.8">
+                    <rect x="-20" y="-28" width="12" height="6" />
+                    <rect x="4" y="-20" width="16" height="6" />
+                    <rect x="-28" y="0" width="8" height="8" />
+                    <rect x="-115" y="-26" width="10" height="6" />
+                    <rect x="65" y="-26" width="10" height="6" />
+                </g>
+
+                <!-- Swirl Pixel Cloud Trails (Matching Reference Image) -->
+                <g fill="#FFFFFF" opacity="0.75">
+                    <rect x="-30" y="-10" width="24" height="4" />
+                    <rect x="-10" y="-6" width="16" height="4" />
+                    <rect x="-18" y="-2" width="8" height="4" />
+                    <rect x="10" y="10" width="20" height="4" />
+                    <rect x="150" y="-10" width="24" height="4" />
+                    <rect x="170" y="-6" width="16" height="4" />
+                </g>
+            </g>
         </g>
 
-        <!-- Gravitational Lensing Photosphere (Upper/Lower Arc Glow) -->
-        <path d="M -30,-4 Q 0,-28 30,-4 Q 0,-14 -30,-4 Z" fill="#E5D9FF" opacity="0.8" filter="url(#purple-glow)"/>
-        <path d="M -30,4 Q 0,28 30,4 Q 0,14 -30,4 Z" fill="#E5D9FF" opacity="0.8" filter="url(#purple-glow)"/>
+        <!-- Spherical Pixel Atmosphere Edge Shading -->
+        <circle cx="0" cy="0" r="44" fill="url(#earth-atmosphere-grad)" />
 
-        <!-- Event Horizon / Black Hole Core -->
-        <circle cx="0" cy="0" r="18" fill="#07040E" stroke="#A77BFF" stroke-width="2.5" filter="url(#purple-glow)"/>
-        <circle cx="0" cy="0" r="14" fill="#000000"/>
+        <!-- Orbital Equatorial Scan Line -->
+        <ellipse cx="0" cy="0" rx="52" ry="12" fill="none" stroke="#D4BEFF" stroke-width="1.2" stroke-dasharray="6 3" transform="rotate(-15)" filter="url(#purple-glow)"/>
     </g>
 
-    <!-- Sci-Fi Animated Scanning Beam Over Black Hole -->
+    <!-- Sci-Fi Animated Scanning Laser Beam -->
     <g transform="translate(10, 0)">
-        <rect x="0" y="20" width="150" height="2" fill="#FFFFFF" opacity="0.7" filter="url(#purple-glow)">
-            <animate attributeName="y" values="15; 110; 15" dur="2.5s" repeatCount="indefinite" />
+        <rect x="0" y="20" width="150" height="2" fill="#FFFFFF" opacity="0.85" filter="url(#purple-glow)">
+            <animate attributeName="y" values="15; 110; 15" dur="2.2s" repeatCount="indefinite" />
         </rect>
     </g>
 </g>

@@ -5,7 +5,7 @@
 <div align="center">
 
 <!-- Master Sci-Fi HUD Banner -->
-<img src="./dark.svg?v=70" width="100%"/>
+<img src="./dark.svg?v=100" width="100%"/>
 <br><br>
 
 <!-- Cyber Purple Row Social Badges -->
