@@ -5,7 +5,7 @@
 <div align="center">
 
 <!-- Master Terminal Banner -->
-<img src="./dark.svg?v=5" width="100%"/>
+<img src="./dark.svg?v=6" width="100%"/>
 <br>
 
 <!-- Social Badges -->
