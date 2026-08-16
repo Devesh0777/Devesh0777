@@ -184,19 +184,19 @@ def build_hacker_profile_svg():
     <!-- Fingerprint Box -->
     <g transform="translate(0, 0)">
         <rect width="170" height="155" fill="#040905" stroke="#00FF66" stroke-width="1.5" rx="4" />
-        <path d="M 50,40 Q 85,20 120,40 Q 135,70 120,110 Q 85,135 50,110 Q 35,70 50,40 Z" fill="none" stroke="#00FF66" stroke-width="2" opacity="0.8" />
-        <path d="M 65,55 Q 85,40 105,55 Q 115,75 105,95 Q 85,110 65,95 Q 55,75 65,55 Z" fill="none" stroke="#00FF66" stroke-width="1.5" opacity="0.6" />
-        <circle cx="85" cy="75" r="10" fill="#00FF66" opacity="0.3" />
-        <text x="85" y="142" class="lbl-green" text-anchor="middle" font-size="10">BIO.PRINT: VERIFIED</text>
+        <path d="M 50,35 Q 85,15 120,35 Q 135,65 120,100 Q 85,125 50,100 Q 35,65 50,35 Z" fill="none" stroke="#00FF66" stroke-width="2" opacity="0.8" />
+        <path d="M 65,50 Q 85,35 105,50 Q 115,70 105,90 Q 85,105 65,90 Q 55,70 65,50 Z" fill="none" stroke="#00FF66" stroke-width="1.5" opacity="0.6" />
+        <circle cx="85" cy="70" r="10" fill="#00FF66" opacity="0.3" />
+        <text x="85" y="136" class="lbl-green" text-anchor="middle" font-size="9">BIO.PRINT: VERIFIED</text>
     </g>
 
     <!-- Signal Wave Box -->
     <g transform="translate(185, 0)">
         <rect width="175" height="155" fill="#040905" stroke="#00FF66" stroke-width="1.5" rx="4" />
         <!-- Oscilloscope Waveform -->
-        <path d="M 10,75 Q 35,15 60,75 T 110,75 T 160,75" class="sine-wave" />
-        <path d="M 10,75 Q 35,135 60,75 T 110,75 T 160,75" class="sine-wave" style="animation-delay: -2s;" />
-        <text x="87" y="142" class="lbl-green" text-anchor="middle" font-size="10">NEURAL SIGNAL: ACTIVE</text>
+        <path d="M 10,70 Q 35,10 60,70 T 110,70 T 160,70" class="sine-wave" />
+        <path d="M 10,70 Q 35,130 60,70 T 110,70 T 160,70" class="sine-wave" style="animation-delay: -2s;" />
+        <text x="87" y="136" class="lbl-green" text-anchor="middle" font-size="9">NEURAL SIGNAL: ACTIVE</text>
     </g>
 </g>
 

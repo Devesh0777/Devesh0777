@@ -5,12 +5,12 @@
 <div align="center">
 
 <!-- Master Terminal Banner -->
-<img src="./dark.svg?v=7" width="100%"/>
+<img src="./dark.svg?v=8" width="100%"/>
 <br><br>
 
-<!-- Prominent Cyber Hacker Social Badges -->
-<a href="https://www.linkedin.com/in/devesh-khalkar-99b074329" target="_blank"><img src="https://img.shields.io/badge/⚡_LINKEDIN-00FF66?style=for-the-badge&logo=linkedin&logoColor=050C07&labelColor=050C07" alt="LinkedIn"/></a>&nbsp;&nbsp;&nbsp;
-<a href="https://github.com/Devesh0777" target="_blank"><img src="https://img.shields.io/badge/⚡_GITHUB-00FF66?style=for-the-badge&logo=github&logoColor=050C07&labelColor=050C07" alt="GitHub"/></a>
+<!-- Cyber Red Glitch Row Social Badges -->
+<a href="https://www.linkedin.com/in/devesh-khalkar-99b074329/" target="_blank"><img src="https://img.shields.io/badge/⚡_LINKEDIN-FF0033?style=for-the-badge&logo=linkedin&logoColor=FFFFFF&labelColor=111111" alt="LinkedIn Profile"/></a>&nbsp;&nbsp;&nbsp;&nbsp;
+<a href="https://github.com/Devesh0777" target="_blank"><img src="https://img.shields.io/badge/⚡_GITHUB-FF0033?style=for-the-badge&logo=github&logoColor=FFFFFF&labelColor=111111" alt="GitHub Profile"/></a>
 
 <br><br>
 
