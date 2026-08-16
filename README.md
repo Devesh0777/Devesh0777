@@ -22,7 +22,7 @@
 <br><br>
 
 <!-- Contribution Heatmap with Snake -->
-<img src="./contrib-heatmap.svg?v=2" width="100%" />
+<img src="./contrib-heatmap.svg?v=4" width="100%" />
 
 <br><br>
 

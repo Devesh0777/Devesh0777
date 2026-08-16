@@ -2,153 +2,143 @@ import json
 import os
 import math
 
-INPUT_JSON = os.path.join("data", "contributions.json")
 OUTPUT_SVG = "contrib-heatmap.svg"
 
-PALETTE = ["#161b22", "#0e4429", "#006d32", "#26a641", "#39d353", "#69f0a0"]
+# Grid size: 45 cols x 15 rows matching the exact pixel Batman Beyond / Red Bat emblem image
+# Dark background: #121212
+# Red pixel color: #E50914 (or #E63946 / #DC2626)
 
-BOX_SIZE = 14
-BOX_SPACING = 4
-WEEKS = 53
-DAYS_IN_WEEK = 7
-
-# Animation parameters
-ANIMATION_DURATION = 0.8 # Total time for the diagonal reveal
-STAGGER = 0.012          # Delay between boxes appearing
-
-def render_heatmap():
-    if not os.path.exists(INPUT_JSON):
-        print(f"Error: {INPUT_JSON} not found. Run fetch_contributions.py first.")
-        return
-
-    with open(INPUT_JSON, "r", encoding="utf-8") as f:
-        data = json.load(f)
-
-    days = data.get("days", [])
-    if not days:
-        print("No contribution days found in JSON.")
-        return
-
-    # Calculate grid dimensions
-    svg_width = WEEKS * (BOX_SIZE + BOX_SPACING) + 40
-    svg_height = DAYS_IN_WEEK * (BOX_SIZE + BOX_SPACING) + 40
-
-    # We expect up to 371 days (53 weeks * 7 days)
-    # The data from GitHub is chronological. We fill columns (weeks) top-to-bottom.
+def generate_batman_grid():
+    rows = 15
+    cols = 45
     
-    svg_content = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {svg_width} {svg_height}" width="{svg_width}" height="{svg_height}">
+    # Initialize dark grid
+    DARK_BG = "#121212"
+    RED_BAT = "#E50914"
+
+    grid = [[DARK_BG for _ in range(cols)] for _ in range(rows)]
+
+    # Exact pixel coordinate mapping of the red Batman emblem from the provided image:
+    # Midline is col 22.
+    red_pixels = [
+        # Tips of wings (top)
+        (11, 0), (33, 0),
+        (12, 1), (13, 1), (31, 1), (32, 1),
+        (13, 2), (14, 2), (15, 2), (29, 2), (30, 2), (31, 2),
+        (13, 3), (14, 3), (15, 3), (16, 3), (28, 3), (29, 3), (30, 3), (31, 3),
+        (13, 4), (14, 4), (15, 4), (16, 4), (17, 4), (27, 4), (28, 4), (29, 4), (30, 4), (31, 4),
+        
+        # Bat ears & upper wing curves
+        (21, 4), (23, 4), # Ears
+        (14, 5), (15, 5), (16, 5), (17, 5), (21, 5), (22, 5), (23, 5), (27, 5), (28, 5), (29, 5), (30, 5),
+        (14, 6), (15, 6), (16, 6), (17, 6), (18, 6), (21, 6), (22, 6), (23, 6), (26, 6), (27, 6), (28, 6), (29, 6), (30, 6),
+        (14, 7), (15, 7), (16, 7), (17, 7), (18, 7), (19, 7), (20, 7), (21, 7), (22, 7), (23, 7), (24, 7), (25, 7), (26, 7), (27, 7), (28, 7), (29, 7), (30, 7),
+        
+        # Wing body expansion
+        (15, 8), (16, 8), (17, 8), (18, 8), (19, 8), (20, 8), (21, 8), (22, 8), (23, 8), (24, 8), (25, 8), (26, 8), (27, 8), (28, 8), (29, 8),
+        (17, 9), (18, 9), (19, 9), (20, 9), (21, 9), (22, 9), (23, 9), (24, 9), (25, 9), (26, 9), (27, 9),
+        
+        # Lower V shape body
+        (19, 10), (20, 10), (21, 10), (22, 10), (23, 10), (24, 10), (25, 10),
+        (20, 11), (21, 11), (22, 11), (23, 11), (24, 11),
+        (21, 12), (22, 12), (23, 12),
+        (22, 13), # Tail
+        (22, 14)  # Tail tip
+    ]
+
+    for c, r in red_pixels:
+        if 0 <= r < rows and 0 <= c < cols:
+            grid[r][c] = RED_BAT
+
+    return grid
+
+def generate_svg():
+    grid = generate_batman_grid()
+    rows = len(grid)
+    cols = len(grid[0])
+
+    box_size = 15
+    box_spacing = 3
+    padding = 24
+
+    svg_width = cols * (box_size + box_spacing) + (padding * 2)
+    svg_height = rows * (box_size + box_spacing) + (padding * 2)
+
+    svg_content = f'''<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {svg_width} {svg_height}" width="{svg_width}" height="{svg_height}">
+    <defs>
+        <!-- Neon Glow Filter -->
+        <filter id="bat-glow" x="-20%" y="-20%" width="140%" height="140%">
+            <feGaussianBlur stdDeviation="2.5" result="blur" />
+            <feMerge>
+                <feMergeNode in="blur"/>
+                <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+        </filter>
+    </defs>
+
     <style>
-        .box {{
-            opacity: 0;
-            animation: fadeIn 0.4s ease-out forwards;
+        .pixel {{
+            transition: transform 0.2s ease, opacity 0.3s ease;
         }}
-        @keyframes fadeIn {{
-            from {{ opacity: 0; transform: scale(0.5); }}
-            to {{ opacity: 1; transform: scale(1); }}
+        .pixel:hover {{
+            transform: scale(1.3);
+            filter: brightness(1.5);
         }}
-        .text {{
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            font-size: 13px;
-            font-weight: bold;
-            fill: #8b949e;
+        .bg-rect {{
+            fill: #0A0A0C;
+            rx: 12px;
+        }}
+        .snake-head {{
+            fill: #FF2E93;
+            filter: url(#bat-glow);
         }}
     </style>
-    
-    <!-- Background (optional) -->
-    <!-- <rect width="100%" height="100%" fill="#0d1117" /> -->
-    
-    <g transform="translate(20, 20)">
-    """
 
-    # Add day labels (Mon, Wed, Fri)
-    svg_content += f'<text class="text" x="-15" y="{2 * (BOX_SIZE + BOX_SPACING) - 3}">Mon</text>\n'
-    svg_content += f'<text class="text" x="-15" y="{4 * (BOX_SIZE + BOX_SPACING) - 3}">Wed</text>\n'
-    svg_content += f'<text class="text" x="-15" y="{6 * (BOX_SIZE + BOX_SPACING) - 3}">Fri</text>\n'
+    <!-- Background Base -->
+    <rect width="100%" height="100%" class="bg-rect" />
 
-    # Map the days into a grid
-    for i, day in enumerate(days):
-        week_idx = i // 7
-        day_idx = i % 7
-        
-        # Realistic GitHub contribution pattern algorithm
-        is_weekend = (day_idx == 0 or day_idx == 6)
-        
-        # Simulate active sprint phases vs quiet periods across the year
-        phase = math.sin(week_idx * 0.25) + math.cos(week_idx * 0.1)
-        is_active_sprint = phase > -0.2
-        
-        # Deterministic noise per cell for consistent rendering
-        seed_val = (week_idx * 37 + day_idx * 17 + 42) % 100
-        
-        if is_weekend:
-            if seed_val < 75:
-                level = 0
-            elif seed_val < 92:
-                level = 1
-            else:
-                level = 2
-        elif is_active_sprint:
-            if seed_val < 20:
-                level = 0
-            elif seed_val < 55:
-                level = 1
-            elif seed_val < 80:
-                level = 2
-            elif seed_val < 94:
-                level = 3
-            else:
-                level = 4
-        else: # Quiet period
-            if seed_val < 65:
-                level = 0
-            elif seed_val < 88:
-                level = 1
-            else:
-                level = 2
+    <g transform="translate({padding}, {padding})">
+'''
 
-        # Blend with real contribution data from JSON if present
-        json_level = day.get("level", 0)
-        if json_level > 0:
-            level = min(max(level, json_level), len(PALETTE) - 1)
+    # Generate Rectangles for each Pixel in Grid
+    for r in range(rows):
+        for c in range(cols):
+            color = grid[r][c]
+            x = c * (box_size + box_spacing)
+            y = r * (box_size + box_spacing)
             
-        color = PALETTE[level]
-        
-        x = week_idx * (BOX_SIZE + BOX_SPACING)
-        y = day_idx * (BOX_SIZE + BOX_SPACING)
-        
-        # Sine wave animation reveal
-        wave_offset = math.sin(week_idx * 0.2 + day_idx * 0.5) * 10
-        delay = (week_idx * 2 + day_idx + wave_offset) * STAGGER
-        
-        svg_content += f'      <rect class="box" x="{x}" y="{y}" width="{BOX_SIZE}" height="{BOX_SIZE}" rx="2" fill="{color}" style="animation-delay: {delay}s; transform-origin: {x + BOX_SIZE/2}px {y + BOX_SIZE/2}px;" />\n'
+            # Subtle glow filter on red pixels
+            glow_attr = ' filter="url(#bat-glow)"' if color == "#E50914" else ""
 
-    # Build an animated snake path slithering through the grid
+            svg_content += f'      <rect class="pixel" x="{x}" y="{y}" width="{box_size}" height="{box_size}" rx="2" fill="{color}"{glow_attr} />\n'
+
+    # Add Animated Snake Path slithering through the Batman grid!
     snake_points = []
-    for w in range(0, WEEKS // 2, 2):
-        x1 = w * (BOX_SIZE + BOX_SPACING) + BOX_SIZE / 2
-        x2 = (w + 1) * (BOX_SIZE + BOX_SPACING) + BOX_SIZE / 2
-        snake_points.append(f"{x1},{BOX_SIZE / 2}")
-        snake_points.append(f"{x1},{6 * (BOX_SIZE + BOX_SPACING) + BOX_SIZE / 2}")
-        snake_points.append(f"{x2},{6 * (BOX_SIZE + BOX_SPACING) + BOX_SIZE / 2}")
-        snake_points.append(f"{x2},{BOX_SIZE / 2}")
-    
+    for c in range(0, cols, 3):
+        x1 = c * (box_size + box_spacing) + box_size / 2
+        x2 = (c + 1) * (box_size + box_spacing) + box_size / 2
+        snake_points.append(f"{x1},{box_size / 2}")
+        snake_points.append(f"{x1},{(rows-1) * (box_size + box_spacing) + box_size / 2}")
+        snake_points.append(f"{x2},{(rows-1) * (box_size + box_spacing) + box_size / 2}")
+        snake_points.append(f"{x2},{box_size / 2}")
+
     snake_path_d = "M " + " L ".join(snake_points)
-    
+
     svg_content += f'''
-    <!-- Animated Snake Slithering Over Heatmap -->
+    <!-- Animated Cyber Snake Slithering across Batman Grid -->
     <g class="snake">
-      <rect width="10" height="10" rx="2" fill="#0e4429">
-        <animateMotion path="{snake_path_d}" dur="15s" repeatCount="indefinite" begin="-0.6s" />
+      <rect width="12" height="12" rx="3" fill="#800020">
+        <animateMotion path="{snake_path_d}" dur="16s" repeatCount="indefinite" begin="-0.6s" />
       </rect>
-      <rect width="10" height="10" rx="2" fill="#26a641">
-        <animateMotion path="{snake_path_d}" dur="15s" repeatCount="indefinite" begin="-0.4s" />
+      <rect width="12" height="12" rx="3" fill="#B91C1C">
+        <animateMotion path="{snake_path_d}" dur="16s" repeatCount="indefinite" begin="-0.4s" />
       </rect>
-      <rect width="10" height="10" rx="2" fill="#39d353">
-        <animateMotion path="{snake_path_d}" dur="15s" repeatCount="indefinite" begin="-0.2s" />
+      <rect width="12" height="12" rx="3" fill="#EF4444">
+        <animateMotion path="{snake_path_d}" dur="16s" repeatCount="indefinite" begin="-0.2s" />
       </rect>
       <!-- Snake Head -->
-      <rect width="11" height="11" rx="3" fill="#A78BFA" stroke="#22D3EE" stroke-width="1.5">
-        <animateMotion path="{snake_path_d}" dur="15s" repeatCount="indefinite" begin="0s" />
+      <rect width="13" height="13" rx="3" class="snake-head" stroke="#FFFFFF" stroke-width="1.5">
+        <animateMotion path="{snake_path_d}" dur="16s" repeatCount="indefinite" begin="0s" />
       </rect>
     </g>
     '''
@@ -158,8 +148,8 @@ def render_heatmap():
 
     with open(OUTPUT_SVG, "w", encoding="utf-8") as f:
         f.write(svg_content)
-    
-    print(f"Created {OUTPUT_SVG}")
+
+    print(f"Successfully generated {OUTPUT_SVG} with Batman pixel emblem matrix ({cols}x{rows})!")
 
 if __name__ == "__main__":
-    render_heatmap()
+    generate_svg()
