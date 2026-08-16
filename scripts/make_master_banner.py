@@ -88,14 +88,11 @@ def build_hacker_profile_svg():
         cur_class = f"tcur-{idx}"
         clip_id = f"clip-{idx}"
         
-        # Calculate pixel width for monospace font (~7.2px per char)
-        text_pixel_width = int(len(full_text) * 7.5) + 16
-        # Y position in global SVG coordinates inside the container
-        global_y = 445 + 20 + y_pos + 2
+        text_pixel_width = int(len(full_text) * 8.5) + 20
         
         clip_defs += f"""
         <clipPath id="{clip_id}">
-            <rect x="570" y="{global_y}" width="0" height="20">
+            <rect x="0" y="-12" width="0" height="24">
                 <animate attributeName="width" from="0" to="{text_pixel_width}" dur="{line_dur:.2f}s" begin="{cumulative_delay:.2f}s" fill="freeze" />
             </rect>
         </clipPath>
@@ -117,8 +114,10 @@ def build_hacker_profile_svg():
         <g transform="translate(0, {y_pos})">
             <!-- Label -->
             <text x="0" y="14" class="lbl-purple">{lbl}</text>
-            <!-- Animated Value inside SVG clipPath -->
-            <text x="150" y="14" class="val-purple" clip-path="url(#{clip_id})">{val}</text>
+            <!-- Animated Value inside local clipPath -->
+            <g transform="translate(150, 14)">
+                <text x="0" y="0" class="val-purple" clip-path="url(#{clip_id})">{val}</text>
+            </g>
         </g>
         """)
 

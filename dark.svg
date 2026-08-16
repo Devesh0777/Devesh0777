@@ -2,44 +2,44 @@
 <defs>
     
         <clipPath id="clip-0">
-            <rect x="570" y="467" width="0" height="20">
-                <animate attributeName="width" from="0" to="121" dur="0.70s" begin="0.30s" fill="freeze" />
+            <rect x="0" y="-12" width="0" height="24">
+                <animate attributeName="width" from="0" to="139" dur="0.70s" begin="0.30s" fill="freeze" />
             </rect>
         </clipPath>
         
         <clipPath id="clip-1">
-            <rect x="570" y="489" width="0" height="20">
-                <animate attributeName="width" from="0" to="91" dur="0.50s" begin="1.20s" fill="freeze" />
+            <rect x="0" y="-12" width="0" height="24">
+                <animate attributeName="width" from="0" to="105" dur="0.50s" begin="1.20s" fill="freeze" />
             </rect>
         </clipPath>
         
         <clipPath id="clip-2">
-            <rect x="570" y="511" width="0" height="20">
-                <animate attributeName="width" from="0" to="166" dur="1.00s" begin="1.90s" fill="freeze" />
+            <rect x="0" y="-12" width="0" height="24">
+                <animate attributeName="width" from="0" to="190" dur="1.00s" begin="1.90s" fill="freeze" />
             </rect>
         </clipPath>
         
         <clipPath id="clip-3">
-            <rect x="570" y="533" width="0" height="20">
-                <animate attributeName="width" from="0" to="181" dur="1.10s" begin="3.10s" fill="freeze" />
+            <rect x="0" y="-12" width="0" height="24">
+                <animate attributeName="width" from="0" to="207" dur="1.10s" begin="3.10s" fill="freeze" />
             </rect>
         </clipPath>
         
         <clipPath id="clip-4">
-            <rect x="570" y="555" width="0" height="20">
-                <animate attributeName="width" from="0" to="53" dur="0.25s" begin="4.40s" fill="freeze" />
+            <rect x="0" y="-12" width="0" height="24">
+                <animate attributeName="width" from="0" to="62" dur="0.25s" begin="4.40s" fill="freeze" />
             </rect>
         </clipPath>
         
         <clipPath id="clip-5">
-            <rect x="570" y="577" width="0" height="20">
-                <animate attributeName="width" from="0" to="128" dur="0.75s" begin="4.85s" fill="freeze" />
+            <rect x="0" y="-12" width="0" height="24">
+                <animate attributeName="width" from="0" to="147" dur="0.75s" begin="4.85s" fill="freeze" />
             </rect>
         </clipPath>
         
         <clipPath id="clip-6">
-            <rect x="570" y="599" width="0" height="20">
-                <animate attributeName="width" from="0" to="203" dur="1.25s" begin="5.80s" fill="freeze" />
+            <rect x="0" y="-12" width="0" height="24">
+                <animate attributeName="width" from="0" to="232" dur="1.25s" begin="5.80s" fill="freeze" />
             </rect>
         </clipPath>
         
@@ -351,50 +351,64 @@
         <g transform="translate(0, 0)">
             <!-- Label -->
             <text x="0" y="14" class="lbl-purple">NAME</text>
-            <!-- Animated Value inside SVG clipPath -->
-            <text x="150" y="14" class="val-purple" clip-path="url(#clip-0)">DEVESH KHALKAR</text>
+            <!-- Animated Value inside local clipPath -->
+            <g transform="translate(150, 14)">
+                <text x="0" y="0" class="val-purple" clip-path="url(#clip-0)">DEVESH KHALKAR</text>
+            </g>
         </g>
         
         <g transform="translate(0, 22)">
             <!-- Label -->
             <text x="0" y="14" class="lbl-purple">INCEPT DATE</text>
-            <!-- Animated Value inside SVG clipPath -->
-            <text x="150" y="14" class="val-purple" clip-path="url(#clip-1)">03/05/2008</text>
+            <!-- Animated Value inside local clipPath -->
+            <g transform="translate(150, 14)">
+                <text x="0" y="0" class="val-purple" clip-path="url(#clip-1)">03/05/2008</text>
+            </g>
         </g>
         
         <g transform="translate(0, 44)">
             <!-- Label -->
             <text x="0" y="14" class="lbl-purple">FUNCTION</text>
-            <!-- Animated Value inside SVG clipPath -->
-            <text x="150" y="14" class="val-purple" clip-path="url(#clip-2)">FULL STACK DEVELOPER</text>
+            <!-- Animated Value inside local clipPath -->
+            <g transform="translate(150, 14)">
+                <text x="0" y="0" class="val-purple" clip-path="url(#clip-2)">FULL STACK DEVELOPER</text>
+            </g>
         </g>
         
         <g transform="translate(0, 66)">
             <!-- Label -->
             <text x="0" y="14" class="lbl-purple">MENTAL STATE</text>
-            <!-- Animated Value inside SVG clipPath -->
-            <text x="150" y="14" class="val-purple" clip-path="url(#clip-3)">OPERATIONAL // OPTIMAL</text>
+            <!-- Animated Value inside local clipPath -->
+            <g transform="translate(150, 14)">
+                <text x="0" y="0" class="val-purple" clip-path="url(#clip-3)">OPERATIONAL // OPTIMAL</text>
+            </g>
         </g>
         
         <g transform="translate(0, 88)">
             <!-- Label -->
             <text x="0" y="14" class="lbl-purple">LAST KNOWN LOCATION</text>
-            <!-- Animated Value inside SVG clipPath -->
-            <text x="150" y="14" class="val-purple" clip-path="url(#clip-4)">INDIA</text>
+            <!-- Animated Value inside local clipPath -->
+            <g transform="translate(150, 14)">
+                <text x="0" y="0" class="val-purple" clip-path="url(#clip-4)">INDIA</text>
+            </g>
         </g>
         
         <g transform="translate(0, 110)">
             <!-- Label -->
             <text x="0" y="14" class="lbl-purple">THREAT ASSESSMENT</text>
-            <!-- Animated Value inside SVG clipPath -->
-            <text x="150" y="14" class="val-purple" clip-path="url(#clip-5)">★ ★ ★ ★ ★ (MAX)</text>
+            <!-- Animated Value inside local clipPath -->
+            <g transform="translate(150, 14)">
+                <text x="0" y="0" class="val-purple" clip-path="url(#clip-5)">★ ★ ★ ★ ★ (MAX)</text>
+            </g>
         </g>
         
         <g transform="translate(0, 132)">
             <!-- Label -->
             <text x="0" y="14" class="lbl-purple">SPECIAL SKILLS</text>
-            <!-- Animated Value inside SVG clipPath -->
-            <text x="150" y="14" class="val-purple" clip-path="url(#clip-6)">PYTHON · C++ · HTML · GIT</text>
+            <!-- Animated Value inside local clipPath -->
+            <g transform="translate(150, 14)">
+                <text x="0" y="0" class="val-purple" clip-path="url(#clip-6)">PYTHON · C++ · HTML · GIT</text>
+            </g>
         </g>
         
     </g>
