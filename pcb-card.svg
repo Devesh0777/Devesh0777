@@ -1,264 +1,194 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 440" width="860" height="440">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 240" width="860" height="240">
 <defs>
-    <!-- Retro Neon Glow Filter -->
-    <filter id="neon-glow" x="-20%" y="-20%" width="140%" height="140%">
+    <filter id="pcb-glow" x="-20%" y="-20%" width="140%" height="140%">
         <feGaussianBlur stdDeviation="2.5" result="blur" />
         <feMerge>
             <feMergeNode in="blur"/>
             <feMergeNode in="SourceGraphic"/>
         </feMerge>
     </filter>
-
-    <!-- CRT Scanline Pattern -->
-    <pattern id="scanlines" width="100" height="4" patternUnits="userSpaceOnUse">
-        <line x1="0" y1="0" x2="100" y2="0" stroke="#000000" stroke-width="1.2" opacity="0.25"/>
-    </pattern>
-
-    <!-- Starfield Grid -->
-    <radialGradient id="vignette" cx="50%" cy="50%" r="75%">
-        <stop offset="60%" stop-color="#000000" stop-opacity="0"/>
-        <stop offset="100%" stop-color="#000000" stop-opacity="0.7"/>
-    </radialGradient>
 </defs>
 
 <style>
-    .bg { fill: #060911; stroke: #1E293B; stroke-width: 2.5; }
+    .silkscreen {
+        font-family: 'Courier New', Courier, monospace;
+        fill: #00FF66;
+        filter: url(#pcb-glow);
+    }
+    .title {
+        font-size: 14px;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+    .subtitle {
+        font-size: 11px;
+        fill: #86EFAC;
+    }
     
-    /* Typography */
-    .hud-label { font-family: 'Courier New', monospace; font-size: 13px; font-weight: bold; fill: #22D3EE; letter-spacing: 2px; }
-    .hud-score { font-family: 'Courier New', monospace; font-size: 15px; font-weight: bold; fill: #39FF14; }
-    .hud-hi { font-family: 'Courier New', monospace; font-size: 15px; font-weight: bold; fill: #FFE600; }
-    .hud-user { font-family: 'Courier New', monospace; font-size: 15px; font-weight: bold; fill: #FF007F; }
-    .insert-coin { font-family: 'Courier New', monospace; font-size: 14px; font-weight: bold; fill: #FF007F; letter-spacing: 3px; animation: blink 1.2s infinite; }
-
-    /* Colors & Glows */
-    .ship-wing { fill: #22D3EE; stroke: #38BDF8; stroke-width: 1.5; filter: url(#neon-glow); }
-    .ship-core { fill: #FFE600; filter: url(#neon-glow); }
-    .laser-beam { fill: #39FF14; filter: url(#neon-glow); }
-    .alien-drop { fill: #FF0055; filter: url(#neon-glow); }
-    .ufo { fill: #FF0033; stroke: #FFE600; stroke-width: 1.5; filter: url(#neon-glow); }
+    .trace-base {
+        fill: none;
+        stroke: #0F2E17;
+        stroke-width: 2.5;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        opacity: 0.6;
+    }
     
-    .alien-1 { fill: #FF007F; filter: url(#neon-glow); }
-    .alien-2 { fill: #00F0FF; filter: url(#neon-glow); }
-    .alien-3 { fill: #39FF14; filter: url(#neon-glow); }
-    .bunker { fill: #10B981; opacity: 0.85; filter: url(#neon-glow); }
-
-    /* CSS Animations */
-    @keyframes blink { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
-
-    /* Flying UFO Crossing Top */
-    @keyframes ufo-cross {
-        0%, 60% { transform: translateX(-60px); opacity: 0; }
-        65% { opacity: 1; }
-        85% { transform: translateX(900px); opacity: 1; }
-        90%, 100% { opacity: 0; transform: translateX(900px); }
+    .trace-flow {
+        fill: none;
+        stroke: #39FF14;
+        stroke-width: 3;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        stroke-dasharray: 25 1000;
+        stroke-dashoffset: 1000;
+        animation: flow 3s linear infinite;
+        filter: url(#pcb-glow);
     }
-
-    /* Player Ship Movement */
-    @keyframes ship-move {
-        0%, 100% { transform: translateX(0px); }
-        25% { transform: translateX(200px); }
-        50% { transform: translateX(50px); }
-        75% { transform: translateX(-180px); }
+    
+    @keyframes flow {
+        0% { stroke-dashoffset: 100; }
+        100% { stroke-dashoffset: -200; }
     }
-
-    /* Player Lasers Firing Upwards */
-    @keyframes laser-1 {
-        0% { transform: translateY(0); opacity: 0; }
-        5% { opacity: 1; }
-        70% { transform: translateY(-240px); opacity: 1; }
-        75%, 100% { transform: translateY(-240px); opacity: 0; }
-    }
-
-    @keyframes laser-2 {
-        0%, 40% { transform: translateY(0); opacity: 0; }
-        45% { opacity: 1; }
-        90% { transform: translateY(-240px); opacity: 1; }
-        95%, 100% { transform: translateY(-240px); opacity: 0; }
-    }
-
-    /* Alien Drop Bomb Firing Downward */
-    @keyframes bomb-drop {
-        0%, 25% { transform: translateY(0); opacity: 0; }
-        30% { opacity: 1; }
-        80% { transform: translateY(180px); opacity: 1; }
-        85%, 100% { opacity: 0; transform: translateY(180px); }
-    }
-
-    /* Alien Swarm Movement */
-    @keyframes swarm-sway {
-        0%, 100% { transform: translateX(0px); }
-        50% { transform: translateX(40px); }
-    }
-
-    /* Explosion Burst Flash */
-    @keyframes explosion {
-        0%, 68%, 78%, 100% { opacity: 0; transform: scale(0.3); }
-        72%, 75% { opacity: 1; transform: scale(1.4); }
-    }
-
-    /* Thruster Flame Pulse */
-    @keyframes flame-pulse {
-        0%, 100% { transform: scaleY(1); }
-        50% { transform: scaleY(1.4); }
-    }
-
-    .ufo-ship { animation: ufo-cross 12s linear infinite; }
-    .player-ship { animation: ship-move 7.5s ease-in-out infinite; }
-    .laser-shot-1 { animation: laser-1 2.3s linear infinite; }
-    .laser-shot-2 { animation: laser-2 2.3s linear infinite; }
-    .bomb-shot { animation: bomb-drop 3.2s linear infinite; }
-    .swarm-grid { animation: swarm-sway 4.5s ease-in-out infinite; }
-    .hit-burst-1 { animation: explosion 2.3s ease-out infinite; }
-    .hit-burst-2 { animation: explosion 2.3s ease-out infinite 1.15s; }
-    .flame { animation: flame-pulse 0.2s linear infinite; }
 </style>
+<rect width="100%" height="100%" fill="#050C07" stroke="#00FF66" stroke-width="2" rx="10" />
 
-<!-- Canvas Base -->
-<rect width="860" height="440" rx="14" class="bg"/>
-
-<!-- Retro Starfield -->
-<g fill="#FFFFFF">
-    <circle cx="80" cy="70" r="1" opacity="0.4"/>
-    <circle cx="240" cy="180" r="1.5" opacity="0.6"/>
-    <circle cx="410" cy="110" r="1" opacity="0.3"/>
-    <circle cx="620" cy="220" r="1.5" opacity="0.5"/>
-    <circle cx="780" cy="90" r="1" opacity="0.4"/>
-    <circle cx="150" cy="300" r="1" opacity="0.5"/>
-    <circle cx="530" cy="320" r="1.5" opacity="0.7"/>
-    <circle cx="710" cy="310" r="1" opacity="0.3"/>
+<!-- Corner Accents -->
+<g stroke="#00FF66" stroke-width="1.5" opacity="0.8">
+    <line x1="12" y1="12" x2="24" y2="12" /><line x1="12" y1="12" x2="12" y2="24" />
+    <line x1="848" y1="12" x2="836" y2="12" /><line x1="848" y1="12" x2="848" y2="24" />
+    <line x1="12" y1="228" x2="24" y2="228" /><line x1="12" y1="228" x2="12" y2="216" />
+    <line x1="848" y1="228" x2="836" y2="228" /><line x1="848" y1="228" x2="848" y2="216" />
 </g>
 
-<!-- Top Retro Arcade HUD Header Bar -->
-<g transform="translate(40, 24)">
-    <!-- 1UP Score -->
-    <text x="0" y="0" class="hud-label">1UP <tspan class="hud-user">DEVESH</tspan></text>
-    <text x="0" y="18" class="hud-score">SCORE: 16480</text>
+<!-- Trace bases -->
+<path class="trace-base" d="M 40,120 L 100,120 L 120,90 L 160,90" />
+<path class="trace-base" d="M 360,90 L 420,90 L 450,50 L 520,50" />
+<path class="trace-base" d="M 360,140 L 420,140 L 450,180 L 520,180" />
+<path class="trace-base" d="M 700,180 L 760,180 L 790,210 L 820,210" />
+<path class="trace-base" d="M 700,50 L 770,50 L 790,30 L 820,30" />
+<path class="trace-base" d="M 40,40 L 80,40 L 100,20 L 200,20" />
+<path class="trace-base" d="M 700,210 L 740,210 L 760,225 L 820,225" />
+<path class="trace-base" d="M 250,210 L 280,210 L 310,190 L 360,190" />
 
-    <!-- High Score -->
-    <text x="390" y="0" class="hud-label" text-anchor="middle">HIGH SCORE</text>
-    <text x="390" y="18" class="hud-hi" text-anchor="middle">99990</text>
+<!-- Trace flows -->
+<path class="trace-flow" d="M 40,120 L 100,120 L 120,90 L 160,90" style="animation-delay: 0.0s;" />
+<path class="trace-flow" d="M 360,90 L 420,90 L 450,50 L 520,50" style="animation-delay: 1.0s;" />
+<path class="trace-flow" d="M 360,140 L 420,140 L 450,180 L 520,180" style="animation-delay: 1.2s;" />
+<path class="trace-flow" d="M 700,180 L 760,180 L 790,210 L 820,210" style="animation-delay: 2.2s;" />
+<path class="trace-flow" d="M 700,50 L 770,50 L 790,30 L 820,30" style="animation-delay: 2.0s;" />
+<path class="trace-flow" d="M 40,40 L 80,40 L 100,20 L 200,20" style="animation-delay: 0.5s;" />
+<path class="trace-flow" d="M 700,210 L 740,210 L 760,225 L 820,225" style="animation-delay: 0.8s;" />
+<path class="trace-flow" d="M 250,210 L 280,210 L 310,190 L 360,190" style="animation-delay: 1.5s;" />
 
-    <!-- Lives Bar -->
-    <text x="780" y="0" class="hud-label" text-anchor="end">LIVES</text>
-    <g transform="translate(725, 8)">
-        <polygon points="0,0 4,-6 8,0 12,-6 16,0 8,8" fill="#FF0055" filter="url(#neon-glow)"/>
-        <polygon points="20,0 24,-6 28,0 32,-6 36,0 28,8" fill="#FF0055" filter="url(#neon-glow)"/>
-        <polygon points="40,0 44,-6 48,0 52,-6 56,0 48,8" fill="#FF0055" filter="url(#neon-glow)"/>
-    </g>
+<!-- Chips -->
+<rect x="181.0" y="54" width="4" height="8" fill="#22C55E" />
+<rect x="181.0" y="168" width="4" height="8" fill="#22C55E" />
+<rect x="195.0" y="54" width="4" height="8" fill="#22C55E" />
+<rect x="195.0" y="168" width="4" height="8" fill="#22C55E" />
+<rect x="209.0" y="54" width="4" height="8" fill="#22C55E" />
+<rect x="209.0" y="168" width="4" height="8" fill="#22C55E" />
+<rect x="223.0" y="54" width="4" height="8" fill="#22C55E" />
+<rect x="223.0" y="168" width="4" height="8" fill="#22C55E" />
+<rect x="237.0" y="54" width="4" height="8" fill="#22C55E" />
+<rect x="237.0" y="168" width="4" height="8" fill="#22C55E" />
+<rect x="251.0" y="54" width="4" height="8" fill="#22C55E" />
+<rect x="251.0" y="168" width="4" height="8" fill="#22C55E" />
+<rect x="265.0" y="54" width="4" height="8" fill="#22C55E" />
+<rect x="265.0" y="168" width="4" height="8" fill="#22C55E" />
+<rect x="279.0" y="54" width="4" height="8" fill="#22C55E" />
+<rect x="279.0" y="168" width="4" height="8" fill="#22C55E" />
+<rect x="293.0" y="54" width="4" height="8" fill="#22C55E" />
+<rect x="293.0" y="168" width="4" height="8" fill="#22C55E" />
+<rect x="307.0" y="54" width="4" height="8" fill="#22C55E" />
+<rect x="307.0" y="168" width="4" height="8" fill="#22C55E" />
+<rect x="321.0" y="54" width="4" height="8" fill="#22C55E" />
+<rect x="321.0" y="168" width="4" height="8" fill="#22C55E" />
+<rect x="335.0" y="54" width="4" height="8" fill="#22C55E" />
+<rect x="335.0" y="168" width="4" height="8" fill="#22C55E" />
+<rect x="154" y="78.0" width="8" height="4" fill="#22C55E" />
+<rect x="358" y="78.0" width="8" height="4" fill="#22C55E" />
+<rect x="154" y="92.0" width="8" height="4" fill="#22C55E" />
+<rect x="358" y="92.0" width="8" height="4" fill="#22C55E" />
+<rect x="154" y="106.0" width="8" height="4" fill="#22C55E" />
+<rect x="358" y="106.0" width="8" height="4" fill="#22C55E" />
+<rect x="154" y="120.0" width="8" height="4" fill="#22C55E" />
+<rect x="358" y="120.0" width="8" height="4" fill="#22C55E" />
+<rect x="154" y="134.0" width="8" height="4" fill="#22C55E" />
+<rect x="358" y="134.0" width="8" height="4" fill="#22C55E" />
+<rect x="154" y="148.0" width="8" height="4" fill="#22C55E" />
+<rect x="358" y="148.0" width="8" height="4" fill="#22C55E" />
+<rect x="160" y="60" width="200" height="110" fill="#0A1C0F" stroke="#00FF66" stroke-width="1.5" rx="4" filter="url(#pcb-glow)" />
+<text class="silkscreen title" x="260.0" y="111.0" text-anchor="middle">DEV-0777 MCU</text>
+<text class="silkscreen subtitle" x="260.0" y="127.0" text-anchor="middle">Full Stack Core</text>
+<rect x="538.0" y="19" width="4" height="8" fill="#22C55E" />
+<rect x="538.0" y="98" width="4" height="8" fill="#22C55E" />
+<rect x="552.0" y="19" width="4" height="8" fill="#22C55E" />
+<rect x="552.0" y="98" width="4" height="8" fill="#22C55E" />
+<rect x="566.0" y="19" width="4" height="8" fill="#22C55E" />
+<rect x="566.0" y="98" width="4" height="8" fill="#22C55E" />
+<rect x="580.0" y="19" width="4" height="8" fill="#22C55E" />
+<rect x="580.0" y="98" width="4" height="8" fill="#22C55E" />
+<rect x="594.0" y="19" width="4" height="8" fill="#22C55E" />
+<rect x="594.0" y="98" width="4" height="8" fill="#22C55E" />
+<rect x="608.0" y="19" width="4" height="8" fill="#22C55E" />
+<rect x="608.0" y="98" width="4" height="8" fill="#22C55E" />
+<rect x="622.0" y="19" width="4" height="8" fill="#22C55E" />
+<rect x="622.0" y="98" width="4" height="8" fill="#22C55E" />
+<rect x="636.0" y="19" width="4" height="8" fill="#22C55E" />
+<rect x="636.0" y="98" width="4" height="8" fill="#22C55E" />
+<rect x="650.0" y="19" width="4" height="8" fill="#22C55E" />
+<rect x="650.0" y="98" width="4" height="8" fill="#22C55E" />
+<rect x="664.0" y="19" width="4" height="8" fill="#22C55E" />
+<rect x="664.0" y="98" width="4" height="8" fill="#22C55E" />
+<rect x="678.0" y="19" width="4" height="8" fill="#22C55E" />
+<rect x="678.0" y="98" width="4" height="8" fill="#22C55E" />
+<rect x="514" y="46.5" width="8" height="4" fill="#22C55E" />
+<rect x="698" y="46.5" width="8" height="4" fill="#22C55E" />
+<rect x="514" y="60.5" width="8" height="4" fill="#22C55E" />
+<rect x="698" y="60.5" width="8" height="4" fill="#22C55E" />
+<rect x="514" y="74.5" width="8" height="4" fill="#22C55E" />
+<rect x="698" y="74.5" width="8" height="4" fill="#22C55E" />
+<rect x="520" y="25" width="180" height="75" fill="#0A1C0F" stroke="#00FF66" stroke-width="1.5" rx="4" filter="url(#pcb-glow)" />
+<text class="silkscreen title" x="610.0" y="58.5" text-anchor="middle">PYTHON // C++</text>
+<text class="silkscreen subtitle" x="610.0" y="74.5" text-anchor="middle">Backend Engine</text>
+<rect x="538.0" y="134" width="4" height="8" fill="#22C55E" />
+<rect x="538.0" y="213" width="4" height="8" fill="#22C55E" />
+<rect x="552.0" y="134" width="4" height="8" fill="#22C55E" />
+<rect x="552.0" y="213" width="4" height="8" fill="#22C55E" />
+<rect x="566.0" y="134" width="4" height="8" fill="#22C55E" />
+<rect x="566.0" y="213" width="4" height="8" fill="#22C55E" />
+<rect x="580.0" y="134" width="4" height="8" fill="#22C55E" />
+<rect x="580.0" y="213" width="4" height="8" fill="#22C55E" />
+<rect x="594.0" y="134" width="4" height="8" fill="#22C55E" />
+<rect x="594.0" y="213" width="4" height="8" fill="#22C55E" />
+<rect x="608.0" y="134" width="4" height="8" fill="#22C55E" />
+<rect x="608.0" y="213" width="4" height="8" fill="#22C55E" />
+<rect x="622.0" y="134" width="4" height="8" fill="#22C55E" />
+<rect x="622.0" y="213" width="4" height="8" fill="#22C55E" />
+<rect x="636.0" y="134" width="4" height="8" fill="#22C55E" />
+<rect x="636.0" y="213" width="4" height="8" fill="#22C55E" />
+<rect x="650.0" y="134" width="4" height="8" fill="#22C55E" />
+<rect x="650.0" y="213" width="4" height="8" fill="#22C55E" />
+<rect x="664.0" y="134" width="4" height="8" fill="#22C55E" />
+<rect x="664.0" y="213" width="4" height="8" fill="#22C55E" />
+<rect x="678.0" y="134" width="4" height="8" fill="#22C55E" />
+<rect x="678.0" y="213" width="4" height="8" fill="#22C55E" />
+<rect x="514" y="161.5" width="8" height="4" fill="#22C55E" />
+<rect x="698" y="161.5" width="8" height="4" fill="#22C55E" />
+<rect x="514" y="175.5" width="8" height="4" fill="#22C55E" />
+<rect x="698" y="175.5" width="8" height="4" fill="#22C55E" />
+<rect x="514" y="189.5" width="8" height="4" fill="#22C55E" />
+<rect x="698" y="189.5" width="8" height="4" fill="#22C55E" />
+<rect x="520" y="140" width="180" height="75" fill="#0A1C0F" stroke="#00FF66" stroke-width="1.5" rx="4" filter="url(#pcb-glow)" />
+<text class="silkscreen title" x="610.0" y="173.5" text-anchor="middle">HTML // CSS</text>
+<text class="silkscreen subtitle" x="610.0" y="189.5" text-anchor="middle">Frontend UI</text>
 
-    <!-- Divider Line under HUD -->
-    <line x1="0" y1="28" x2="780" y2="28" stroke="#1E293B" stroke-width="1.5"/>
-</g>
-
-<!-- Top Bonus UFO Flying Saucer -->
-<g class="ufo-ship" transform="translate(0, 68)">
-    <ellipse cx="24" cy="8" rx="20" ry="6" class="ufo"/>
-    <ellipse cx="24" cy="4" rx="10" ry="4" fill="#00F0FF"/>
-    <circle cx="14" cy="8" r="1.5" fill="#FFE600"/>
-    <circle cx="24" cy="8" r="1.5" fill="#FFE600"/>
-    <circle cx="34" cy="8" r="1.5" fill="#FFE600"/>
-</g>
-
-<!-- Alien Swarm Grid (Properly Shifted Down Below HUD) -->
-<g class="swarm-grid" transform="translate(85, 105)">
-    <!-- Row 1: Pink Squid Invaders -->
-    <g class="alien-1" transform="translate(0, 0)">
-        <g transform="translate(20,0)"><rect width="24" height="14" rx="4"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="17" cy="7" r="2" fill="#000"/><rect x="2" y="14" width="4" height="5"/><rect x="18" y="14" width="4" height="5"/></g>
-        <g transform="translate(100,0)"><rect width="24" height="14" rx="4"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="17" cy="7" r="2" fill="#000"/><rect x="2" y="14" width="4" height="5"/><rect x="18" y="14" width="4" height="5"/></g>
-        <g transform="translate(180,0)"><rect width="24" height="14" rx="4"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="17" cy="7" r="2" fill="#000"/><rect x="2" y="14" width="4" height="5"/><rect x="18" y="14" width="4" height="5"/></g>
-        <g transform="translate(260,0)"><rect width="24" height="14" rx="4"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="17" cy="7" r="2" fill="#000"/><rect x="2" y="14" width="4" height="5"/><rect x="18" y="14" width="4" height="5"/></g>
-        <g transform="translate(340,0)"><rect width="24" height="14" rx="4"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="17" cy="7" r="2" fill="#000"/><rect x="2" y="14" width="4" height="5"/><rect x="18" y="14" width="4" height="5"/></g>
-        <g transform="translate(420,0)"><rect width="24" height="14" rx="4"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="17" cy="7" r="2" fill="#000"/><rect x="2" y="14" width="4" height="5"/><rect x="18" y="14" width="4" height="5"/></g>
-        <g transform="translate(500,0)"><rect width="24" height="14" rx="4"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="17" cy="7" r="2" fill="#000"/><rect x="2" y="14" width="4" height="5"/><rect x="18" y="14" width="4" height="5"/></g>
-        <g transform="translate(580,0)"><rect width="24" height="14" rx="4"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="17" cy="7" r="2" fill="#000"/><rect x="2" y="14" width="4" height="5"/><rect x="18" y="14" width="4" height="5"/></g>
-    </g>
-
-    <!-- Row 2: Cyan Crab Invaders -->
-    <g class="alien-2" transform="translate(0, 38)">
-        <g transform="translate(20,0)"><rect width="26" height="15" rx="3"/><rect x="-2" y="2" width="4" height="6"/><rect x="24" y="2" width="4" height="6"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="19" cy="7" r="2" fill="#000"/></g>
-        <g transform="translate(100,0)"><rect width="26" height="15" rx="3"/><rect x="-2" y="2" width="4" height="6"/><rect x="24" y="2" width="4" height="6"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="19" cy="7" r="2" fill="#000"/></g>
-        <g transform="translate(180,0)"><rect width="26" height="15" rx="3"/><rect x="-2" y="2" width="4" height="6"/><rect x="24" y="2" width="4" height="6"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="19" cy="7" r="2" fill="#000"/></g>
-        <g transform="translate(260,0)"><rect width="26" height="15" rx="3"/><rect x="-2" y="2" width="4" height="6"/><rect x="24" y="2" width="4" height="6"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="19" cy="7" r="2" fill="#000"/></g>
-        <g transform="translate(340,0)"><rect width="26" height="15" rx="3"/><rect x="-2" y="2" width="4" height="6"/><rect x="24" y="2" width="4" height="6"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="19" cy="7" r="2" fill="#000"/></g>
-        <g transform="translate(420,0)"><rect width="26" height="15" rx="3"/><rect x="-2" y="2" width="4" height="6"/><rect x="24" y="2" width="4" height="6"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="19" cy="7" r="2" fill="#000"/></g>
-        <g transform="translate(500,0)"><rect width="26" height="15" rx="3"/><rect x="-2" y="2" width="4" height="6"/><rect x="24" y="2" width="4" height="6"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="19" cy="7" r="2" fill="#000"/></g>
-        <g transform="translate(580,0)"><rect width="26" height="15" rx="3"/><rect x="-2" y="2" width="4" height="6"/><rect x="24" y="2" width="4" height="6"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="19" cy="7" r="2" fill="#000"/></g>
-    </g>
-
-    <!-- Row 3: Neon Green Octopus Invaders -->
-    <g class="alien-3" transform="translate(0, 76)">
-        <g transform="translate(20,0)"><rect width="26" height="15" rx="3"/><rect x="4" y="-3" width="3" height="4"/><rect x="19" y="-3" width="3" height="4"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="19" cy="7" r="2" fill="#000"/></g>
-        <g transform="translate(100,0)"><rect width="26" height="15" rx="3"/><rect x="4" y="-3" width="3" height="4"/><rect x="19" y="-3" width="3" height="4"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="19" cy="7" r="2" fill="#000"/></g>
-        <g transform="translate(180,0)"><rect width="26" height="15" rx="3"/><rect x="4" y="-3" width="3" height="4"/><rect x="19" y="-3" width="3" height="4"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="19" cy="7" r="2" fill="#000"/></g>
-        <g transform="translate(260,0)"><rect width="26" height="15" rx="3"/><rect x="4" y="-3" width="3" height="4"/><rect x="19" y="-3" width="3" height="4"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="19" cy="7" r="2" fill="#000"/></g>
-        <g transform="translate(340,0)"><rect width="26" height="15" rx="3"/><rect x="4" y="-3" width="3" height="4"/><rect x="19" y="-3" width="3" height="4"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="19" cy="7" r="2" fill="#000"/></g>
-        <g transform="translate(420,0)"><rect width="26" height="15" rx="3"/><rect x="4" y="-3" width="3" height="4"/><rect x="19" y="-3" width="3" height="4"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="19" cy="7" r="2" fill="#000"/></g>
-        <g transform="translate(500,0)"><rect width="26" height="15" rx="3"/><rect x="4" y="-3" width="3" height="4"/><rect x="19" y="-3" width="3" height="4"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="19" cy="7" r="2" fill="#000"/></g>
-        <g transform="translate(580,0)"><rect width="26" height="15" rx="3"/><rect x="4" y="-3" width="3" height="4"/><rect x="19" y="-3" width="3" height="4"/><circle cx="7" cy="7" r="2" fill="#000"/><circle cx="19" cy="7" r="2" fill="#000"/></g>
-    </g>
-
-    <!-- Enemy Plasma Bomb Dropping -->
-    <g class="bomb-shot" transform="translate(353, 90)">
-        <polygon points="0,0 4,6 -4,6" class="alien-drop"/>
-        <line x1="0" y1="0" x2="0" y2="12" stroke="#FF0055" stroke-width="2"/>
-    </g>
-
-    <!-- Particle Explosions -->
-    <g class="hit-burst-1" transform="translate(273, 38)">
-        <polygon points="0,-12 4,-4 12,-4 6,2 8,10 0,5 -8,10 -6,2 -12,-4 -4,-4" fill="#FFE600"/>
-        <circle cx="0" cy="0" r="12" fill="#FF007F" opacity="0.6"/>
-    </g>
-    <g class="hit-burst-2" transform="translate(433, 76)">
-        <polygon points="0,-12 4,-4 12,-4 6,2 8,10 0,5 -8,10 -6,2 -12,-4 -4,-4" fill="#00F0FF"/>
-        <circle cx="0" cy="0" r="12" fill="#39FF14" opacity="0.6"/>
-    </g>
-</g>
-
-<!-- Defense Bunkers / Shields -->
-<g class="bunker" transform="translate(130, 275)">
-    <!-- Bunker 1 -->
-    <path d="M0,24 L0,0 L36,0 L36,24 L26,24 L26,14 L10,14 L10,24 Z"/>
-    <!-- Bunker 2 -->
-    <path d="M180,24 L180,0 L216,0 L216,24 L206,24 L206,14 L190,14 L190,24 Z"/>
-    <!-- Bunker 3 -->
-    <path d="M360,24 L360,0 L396,0 L396,24 L386,24 L386,14 L370,14 L370,24 Z"/>
-    <!-- Bunker 4 -->
-    <path d="M540,24 L540,0 L576,0 L576,24 L566,24 L566,14 L550,14 L550,24 Z"/>
-</g>
-
-<!-- Detailed Galaga/Arcade Player Starship (Centered & Aligned) -->
-<g transform="translate(430, 350)">
-    <g class="player-ship">
-        <!-- Dual Lasers Firing Upwards -->
-        <rect x="-10" y="-20" width="3" height="18" class="laser-beam laser-shot-1"/>
-        <rect x="7" y="-20" width="3" height="18" class="laser-beam laser-shot-2"/>
-
-        <!-- Detailed Retro Fighter Ship Craft -->
-        <!-- Wings -->
-        <path d="M-28,14 L-18,2 L-10,-8 L-4,-18 L4,-18 L10,-8 L18,2 L28,14 L16,14 L10,6 L-10,6 L-16,14 Z" class="ship-wing"/>
-        <!-- Wingtip Cannons -->
-        <rect x="-29" y="-2" width="3" height="16" fill="#FFE600" filter="url(#neon-glow)"/>
-        <rect x="26" y="-2" width="3" height="16" fill="#FFE600" filter="url(#neon-glow)"/>
-        <!-- Central Nosecone & Cockpit Glass -->
-        <path d="M0,-28 L5,-14 L5,6 L-5,6 L-5,-14 Z" class="ship-core"/>
-        <ellipse cx="0" cy="-10" rx="3.5" ry="7" fill="#FFFFFF" filter="url(#neon-glow)"/>
-
-        <!-- Animated Thruster Exhaust Flames -->
-        <polygon points="-5,14 0,26 5,14" fill="#FF007F" filter="url(#neon-glow)" class="flame"/>
-        <polygon points="-2,14 0,21 2,14" fill="#FFE600" class="flame"/>
-    </g>
-</g>
-
-<!-- Bottom Arcade Footer Line & Blinking Text -->
-<g transform="translate(430, 408)">
-    <text x="0" y="0" text-anchor="middle" class="insert-coin">★ INSERT COIN · 1P PRESS START ★</text>
-</g>
-
-<!-- CRT Scanline Grid Overlay -->
-<rect width="860" height="440" rx="14" fill="url(#scanlines)" pointer-events="none"/>
-
-<!-- Vignette Edge Shadow -->
-<rect width="860" height="440" rx="14" fill="url(#vignette)" pointer-events="none"/>
+<!-- Vias (Holes) -->
+<circle cx="40" cy="120" r="4" fill="#050C07" stroke="#00FF66" stroke-width="1.5" />
+<circle cx="820" cy="210" r="4" fill="#050C07" stroke="#00FF66" stroke-width="1.5" />
+<circle cx="820" cy="30" r="4" fill="#050C07" stroke="#00FF66" stroke-width="1.5" />
+<circle cx="200" cy="20" r="3" fill="#050C07" stroke="#00FF66" stroke-width="1.5" />
+<circle cx="820" cy="225" r="3" fill="#050C07" stroke="#00FF66" stroke-width="1.5" />
 
 </svg>
