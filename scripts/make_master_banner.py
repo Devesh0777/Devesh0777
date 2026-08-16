@@ -81,55 +81,17 @@ def build_hacker_profile_svg():
     
     for idx, (lbl, val) in enumerate(info_fields):
         y_pos = idx * 22
-        full_text = val
-        line_dur = len(full_text) * char_duration
         
-        line_class = f"tline-{idx}"
-        cur_class = f"tcur-{idx}"
-        clip_id = f"clip-{idx}"
-        
-        text_pixel_width = int(len(full_text) * 8.5) + 20
-        
-        # CSS keyframe animation for clipPath rect width (100% GitHub Markdown Compatible)
-        clip_defs += f"""
-        <clipPath id="{clip_id}">
-            <rect class="clip-rect-{idx}" x="0" y="-12" width="0" height="24" />
-        </clipPath>
-        """
-
-        css_typewriter += f"""
-        .clip-rect-{idx} {{
-            animation: type-clip-{idx} {line_dur:.2f}s steps({len(full_text)}) {cumulative_delay:.2f}s forwards;
-        }}
-        @keyframes type-clip-{idx} {{
-            0% {{ width: 0px; }}
-            100% {{ width: {text_pixel_width}px; }}
-        }}
-        .{cur_class} {{
-            opacity: 0;
-            animation: cur-anim-{idx} {line_dur:.2f}s steps({len(full_text)}) {cumulative_delay:.2f}s forwards, blink 0.8s infinite;
-        }}
-        @keyframes cur-anim-{idx} {{
-            0% {{ opacity: 1; }}
-            99% {{ opacity: 1; }}
-            100% {{ opacity: 0; }}
-        }}
-        """
-
         field_elements.append(f"""
         <g transform="translate(0, {y_pos})">
             <!-- Label -->
             <text x="0" y="14" class="lbl-purple">{lbl}</text>
-            <!-- Value text clipped with CSS-animated clipPath -->
-            <g transform="translate(150, 14)">
-                <text x="0" y="0" class="val-purple" clip-path="url(#{clip_id})">{val}</text>
-            </g>
+            <!-- Direct Value Text (Guaranteed GitHub Markdown Render) -->
+            <text x="150" y="14" class="val-purple">{val}</text>
         </g>
         """)
 
-        cumulative_delay += line_dur + line_pause
-
-    final_cur_delay = cumulative_delay
+    final_cur_delay = 0.5
 
     svg = f"""<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 760" width="860" height="760">
 <defs>
