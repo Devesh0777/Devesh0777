@@ -11,8 +11,8 @@
 <br><br>
 
 <!-- Stats Row -->
-<img src="https://github-readme-stats.vercel.app/api?username=Devesh0777&show_icons=true&theme=dark&hide_border=true&title_color=22D3EE&icon_color=A78BFA&text_color=94A3B8&bg_color=0A101F&count_private=true&include_all_commits=true&cache_seconds=86400" width="48%" />
-<img src="https://github-readme-stats.vercel.app/api/top-langs/?username=Devesh0777&layout=compact&theme=dark&hide_border=true&title_color=22D3EE&text_color=94A3B8&bg_color=0A101F&cache_seconds=86400" width="48%" />
+<img src="https://github-readme-stats-anuraghazra.vercel.app/api?username=Devesh0777&show_icons=true&theme=dark&hide_border=true&title_color=22D3EE&icon_color=A78BFA&text_color=94A3B8&bg_color=0A101F&count_private=true&include_all_commits=true&cache_seconds=86400" width="48%" />
+<img src="https://github-readme-stats-anuraghazra.vercel.app/api/top-langs/?username=Devesh0777&layout=compact&theme=dark&hide_border=true&title_color=22D3EE&text_color=94A3B8&bg_color=0A101F&cache_seconds=86400" width="48%" />
 
 <br><br>
 
@@ -28,6 +28,11 @@
 
 <!-- PCB Card full width-ish -->
 <img src="./pcb-card.svg" width="70%" />
+<br><br>
+
+<!-- 3D Block Contribution Graph (GitBlock) -->
+<img src="./profile-gitblock.svg" width="100%" />
+
 
 </div>
 

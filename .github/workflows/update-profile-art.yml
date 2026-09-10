@@ -21,6 +21,12 @@ jobs:
       - run: pip install requests beautifulsoup4
       - run: python scripts/fetch_contributions.py
       - run: python scripts/render_heatmap_svg.py
+      - name: Generate 3D Profile Contrib (GitBlock)
+        uses: yoshi389111/github-profile-3d-contrib@latest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          USERNAME: Devesh0777
+
       - name: Generate github-snake.svg
         uses: Platane/snk/svg-only@v3
         with:
@@ -30,4 +36,4 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: "chore: refresh contribution graph and snake [skip ci]"
-          file_pattern: "data/contributions.json contrib-heatmap.svg github-snake.svg"
+          file_pattern: "data/contributions.json contrib-heatmap.svg github-snake.svg profile-3d-contrib/* profile-gitblock.svg"
