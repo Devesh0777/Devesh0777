@@ -78,7 +78,7 @@
       <rect class="box" x="126" y="54" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 0.23270991950567782s; transform-origin: 133.0px 61.0px;" />
       <rect class="box" x="126" y="72" width="14" height="14" rx="2" fill="#006d32" style="animation-delay: 0.18533506775678021s; transform-origin: 133.0px 79.0px;" />
       <rect class="box" x="126" y="90" width="14" height="14" rx="2" fill="#26a641" style="animation-delay: 0.1454680608979231s; transform-origin: 133.0px 97.0px;" />
-      <rect class="box" x="126" y="108" width="14" height="14" rx="2" fill="#161b22" style="animation-delay: 0.12580775113325807s; transform-origin: 133.0px 115.0px;" />
+      <rect class="box" x="126" y="108" width="14" height="14" rx="2" fill="#161b22" style="animation-delay: 0.1258077511332581s; transform-origin: 133.0px 115.0px;" />
       <rect class="box" x="144" y="0" width="14" height="14" rx="2" fill="#161b22" style="animation-delay: 0.31194883236498067s; transform-origin: 151.0px 7.0px;" />
       <rect class="box" x="144" y="18" width="14" height="14" rx="2" fill="#006d32" style="animation-delay: 0.3075851239978648s; transform-origin: 151.0px 25.0px;" />
       <rect class="box" x="144" y="36" width="14" height="14" rx="2" fill="#006d32" style="animation-delay: 0.2778601646185757s; transform-origin: 151.0px 43.0px;" />
@@ -111,7 +111,7 @@
       <rect class="box" x="216" y="18" width="14" height="14" rx="2" fill="#161b22" style="animation-delay: 0.32870991950567785s; transform-origin: 223.0px 25.0px;" />
       <rect class="box" x="216" y="36" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 0.2813350677567802s; transform-origin: 223.0px 43.0px;" />
       <rect class="box" x="216" y="54" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 0.24146806089792314s; transform-origin: 223.0px 61.0px;" />
-      <rect class="box" x="216" y="72" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 0.22180775113325807s; transform-origin: 223.0px 79.0px;" />
+      <rect class="box" x="216" y="72" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 0.22180775113325812s; transform-origin: 223.0px 79.0px;" />
       <rect class="box" x="216" y="90" width="14" height="14" rx="2" fill="#006d32" style="animation-delay: 0.23010568648508012s; transform-origin: 223.0px 97.0px;" />
       <rect class="box" x="216" y="108" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 0.26726826149328153s; transform-origin: 223.0px 115.0px;" />
       <rect class="box" x="234" y="0" width="14" height="14" rx="2" fill="#161b22" style="animation-delay: 0.3738601646185757s; transform-origin: 241.0px 7.0px;" />
@@ -177,7 +177,7 @@
       <rect class="box" x="378" y="72" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 0.5420292716619004s; transform-origin: 385.0px 79.0px;" />
       <rect class="box" x="378" y="90" width="14" height="14" rx="2" fill="#161b22" style="animation-delay: 0.6125819904739919s; transform-origin: 385.0px 97.0px;" />
       <rect class="box" x="378" y="108" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 0.6712401436618983s; transform-origin: 385.0px 115.0px;" />
-      <rect class="box" x="396" y="0" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 0.413807751133258s; transform-origin: 403.0px 7.0px;" />
+      <rect class="box" x="396" y="0" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 0.41380775113325813s; transform-origin: 403.0px 7.0px;" />
       <rect class="box" x="396" y="18" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 0.42210568648508007s; transform-origin: 403.0px 25.0px;" />
       <rect class="box" x="396" y="36" width="14" height="14" rx="2" fill="#006d32" style="animation-delay: 0.4592682614932815s; transform-origin: 403.0px 43.0px;" />
       <rect class="box" x="396" y="54" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 0.5191348002203717s; transform-origin: 403.0px 61.0px;" />
