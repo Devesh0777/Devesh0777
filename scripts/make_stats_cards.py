@@ -1,5 +1,4 @@
 import os
-import shutil
 
 ROOT_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
@@ -150,7 +149,3 @@ def generate_langs_card():
 if __name__ == "__main__":
     generate_stats_card()
     generate_langs_card()
-    # Copy this script to scripts/make_stats_cards.py
-    scripts_dest = os.path.join(ROOT_DIR, "scripts", "make_stats_cards.py")
-    shutil.copyfile(__file__, scripts_dest)
-    print("Copied script to:", scripts_dest)
