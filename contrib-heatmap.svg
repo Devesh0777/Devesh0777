@@ -330,16 +330,16 @@
       <rect class="box" x="774" y="54" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 0.9929915221328541s; transform-origin: 781.0px 61.0px;" />
       <rect class="box" x="774" y="72" width="14" height="14" rx="2" fill="#161b22" style="animation-delay: 0.9692669494064633s; transform-origin: 781.0px 79.0px;" />
       <rect class="box" x="774" y="90" width="14" height="14" rx="2" fill="#161b22" style="animation-delay: 0.9726536894155213s; transform-origin: 781.0px 97.0px;" />
-      <rect class="box" x="774" y="108" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 1.005260568603755s; transform-origin: 781.0px 115.0px;" />
+      <rect class="box" x="774" y="108" width="14" height="14" rx="2" fill="#161b22" style="animation-delay: 1.005260568603755s; transform-origin: 781.0px 115.0px;" />
       <rect class="box" x="792" y="0" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 1.1261900631470114s; transform-origin: 799.0px 7.0px;" />
       <rect class="box" x="792" y="18" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 1.0829345308208476s; transform-origin: 799.0px 25.0px;" />
       <rect class="box" x="792" y="36" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 1.0360225044897686s; transform-origin: 799.0px 43.0px;" />
       <rect class="box" x="792" y="54" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 0.9998777028283701s; transform-origin: 799.0px 61.0px;" />
-      <rect class="box" x="792" y="72" width="14" height="14" rx="2" fill="#161b22" style="animation-delay: 0.986287652392021s; transform-origin: 799.0px 79.0px;" />
-      <rect class="box" x="792" y="90" width="14" height="14" rx="2" fill="#006d32" style="animation-delay: 1.0015176900117493s; transform-origin: 799.0px 97.0px;" />
-      <rect class="box" x="792" y="108" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 1.0447769898267452s; transform-origin: 799.0px 115.0px;" />
+      <rect class="box" x="792" y="72" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 0.986287652392021s; transform-origin: 799.0px 79.0px;" />
+      <rect class="box" x="792" y="90" width="14" height="14" rx="2" fill="#161b22" style="animation-delay: 1.0015176900117493s; transform-origin: 799.0px 97.0px;" />
+      <rect class="box" x="792" y="108" width="14" height="14" rx="2" fill="#006d32" style="animation-delay: 1.0447769898267452s; transform-origin: 799.0px 115.0px;" />
       <rect class="box" x="810" y="0" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 1.1294542182290108s; transform-origin: 817.0px 7.0px;" />
-      <rect class="box" x="810" y="18" width="14" height="14" rx="2" fill="#161b22" style="animation-delay: 1.0829818655445829s; transform-origin: 817.0px 25.0px;" />
+      <rect class="box" x="810" y="18" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 1.0829818655445829s; transform-origin: 817.0px 25.0px;" />
       <rect class="box" x="810" y="36" width="14" height="14" rx="2" fill="#161b22" style="animation-delay: 1.0387174666932757s; transform-origin: 817.0px 43.0px;" />
       <rect class="box" x="810" y="54" width="14" height="14" rx="2" fill="#161b22" style="animation-delay: 1.0104365088033995s; transform-origin: 817.0px 61.0px;" />
       <rect class="box" x="810" y="72" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 1.0080011752139157s; transform-origin: 817.0px 79.0px;" />
@@ -385,12 +385,13 @@
       <rect class="box" x="918" y="36" width="14" height="14" rx="2" fill="#006d32" style="animation-delay: 1.130498672501842s; transform-origin: 925.0px 43.0px;" />
       <rect class="box" x="918" y="54" width="14" height="14" rx="2" fill="#26a641" style="animation-delay: 1.1685619699297163s; transform-origin: 925.0px 61.0px;" />
       <rect class="box" x="918" y="72" width="14" height="14" rx="2" fill="#39d353" style="animation-delay: 1.2290124861315808s; transform-origin: 925.0px 79.0px;" />
-      <rect class="box" x="918" y="90" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 1.2999878449703934s; transform-origin: 925.0px 97.0px;" />
+      <rect class="box" x="918" y="90" width="14" height="14" rx="2" fill="#006d32" style="animation-delay: 1.2999878449703934s; transform-origin: 925.0px 97.0px;" />
       <rect class="box" x="918" y="108" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 1.367048821764867s; transform-origin: 925.0px 115.0px;" />
-      <rect class="box" x="936" y="0" width="14" height="14" rx="2" fill="#161b22" style="animation-delay: 1.1486608237097216s; transform-origin: 943.0px 7.0px;" />
+      <rect class="box" x="936" y="0" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 1.1486608237097216s; transform-origin: 943.0px 7.0px;" />
       <rect class="box" x="936" y="18" width="14" height="14" rx="2" fill="#26a641" style="animation-delay: 1.1405476496032347s; transform-origin: 943.0px 25.0px;" />
-      <rect class="box" x="936" y="36" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 1.161680576920239s; transform-origin: 943.0px 43.0px;" />
+      <rect class="box" x="936" y="36" width="14" height="14" rx="2" fill="#161b22" style="animation-delay: 1.161680576920239s; transform-origin: 943.0px 43.0px;" />
       <rect class="box" x="936" y="54" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 1.2098235465315559s; transform-origin: 943.0px 61.0px;" />
+      <rect class="box" x="936" y="72" width="14" height="14" rx="2" fill="#0e4429" style="animation-delay: 1.2761274989462028s; transform-origin: 943.0px 79.0px;" />
 
     <!-- Animated Snake Slithering Over Heatmap -->
     <g class="snake">
